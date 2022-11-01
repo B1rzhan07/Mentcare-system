@@ -1,5 +1,5 @@
 import React from "react";
-import axios from "axios";
+import axios from "../../../api/axios";
 import Header from "../../../Components/Header";
 import { Button } from "@mui/material";
 import classes from "./PersonalAdmin.module.scss";
@@ -10,6 +10,7 @@ import {
   setDataPatients,
   setDataDoctors,
 } from "../../../Redux/Slices/userSlice";
+
 const PersonalAdmin = () => {
   const dispatch = useDispatch();
 
@@ -23,7 +24,7 @@ const PersonalAdmin = () => {
   const getPatients = () => {
     try {
       axios
-        .get("http://localhost:8800/api/myPage/admin", {
+        .get("myPage/admin", {
           headers: {
             Authorization: `Bearer ${localStorage.getItem(
               "token"
@@ -47,7 +48,7 @@ const PersonalAdmin = () => {
   const getDoctors = () => {
     try {
       axios
-        .get("http://localhost:8800/api/myPage/admin", {
+        .get("/myPage/admin", {
           headers: {
             Authorization: `Bearer ${localStorage.getItem(
               "token"

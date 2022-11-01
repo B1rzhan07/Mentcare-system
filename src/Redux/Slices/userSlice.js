@@ -1,5 +1,18 @@
-import { createSlice } from '@reduxjs/toolkit';
-
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import axios from '../../api/axios';
+export const fetchUsers = createAsyncThunk(
+    'user/fetchUsers',
+    async() => {
+        const { data } = await axios.get('/myPage/admin', {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem(
+                "token"
+              )}`,
+            },
+        });
+        return data;
+    }
+)
 const initialState = {
     email: '',
     password: '',
@@ -34,6 +47,12 @@ const userSlice = createSlice({
         setDataDoctors(state, action) {
             state.doctors = action.payload;
         },
+    },
+    extraReducers: {
+        [fetchUsers.fulfilled]: (state, action) => {
+            state.patients = action.payload.patients;
+            state.doctors = action.payload.doctors;
+        }
     }
 });
 export const { setUser, setIsAuth, setTypeof, setButton, setDataPatients, setDataDoctors } = userSlice.actions;

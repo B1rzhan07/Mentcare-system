@@ -38,9 +38,7 @@ const RegisterDoctor = () => {
   const [rating, setRating] = React.useState("");
   const [file, setFile] = React.useState(null);
   const formData = new FormData();
-  formData.append("photo", file);
-
-  const registerPatient = async () => {
+  const registerDoctor = async () => {
     const formData = new FormData();
     formData.append("photo", file);
     formData.append("name", name);
@@ -258,7 +256,7 @@ const RegisterDoctor = () => {
             onChange={(e) => setRating(e.target.value)}
           />
           <Button
-            onClick={registerPatient}
+            onClick={registerDoctor}
             variant="contained">
             Register
           </Button>

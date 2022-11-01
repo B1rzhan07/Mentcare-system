@@ -7,7 +7,8 @@ import { Button } from "@mui/material";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { categories } from "../../../assets/Personal/personal";
-
+import classes from "./PersonalDoctor.module.scss";
+import Header from "../../../Components/Header";
 
 const PersonalDoctor = () => {
   const { id } = useParams();
@@ -102,7 +103,7 @@ const PersonalDoctor = () => {
     );
 
     try {
-      const response = await axios({
+      await axios({
         method: "patch",
         url: `http://localhost:8800/api/myPage/admin/doctor/${id}`,
         data: formData,
@@ -136,238 +137,248 @@ const PersonalDoctor = () => {
 
   return (
     <div>
-      <h1>PersonalDoctor</h1>
-      <div>
-        <img src={doctor.photo} alt="here" />
+      <Header />
+      <div className={classes.wrapper}>
+        <h1>Personal Doctor {doctor.name}</h1>
+        <div>
+          <img src={doctor.photo} alt="here" />
+          {type === "admin" && (
+            <input
+              type="file"
+              onChange={(e) => setFile(e.target.files[0])}
+            />
+          )}
+        </div>
+        <div>
+          Name: {doctor.name}
+          {type === "admin" && (
+            <input
+              required
+              id="outlined-required"
+              label="First Name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          )}
+        </div>
+        <div>
+          Surname: {doctor.surname}
+          {type === "admin" && (
+            <input
+              required
+              id="outlined-required"
+              label="Surname"
+              value={surname}
+              onChange={(e) => setSurname(e.target.value)}
+            />
+          )}
+        </div>
+        <div>
+          Middle Name: {doctor.middle_name}
+          {type === "admin" && (
+            <input
+              required
+              id="outlined-required"
+              label="Middle Name"
+              value={middleName}
+              onChange={(e) =>
+                setMiddleName(e.target.value)
+              }
+            />
+          )}
+        </div>
+        <div>
+          email: {doctor.email}
+          {type === "admin" && (
+            <input
+              id="outlined"
+              label="E-mail"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          )}
+        </div>
+        <div>
+          iin: {doctor.iin}
+          {type === "admin" && (
+            <input
+              required
+              id="outlined-required"
+              label="IIN Number"
+              value={iin}
+              onChange={(e) => setIin(e.target.value)}
+            />
+          )}
+        </div>
+        <div>
+          dateOfBirth: {doctor.date_of_birth}
+          {type === "admin" && (
+            <input
+              required
+              type="date"
+              id="outlined-required"
+              value={dateOfBirth}
+              onChange={(e) =>
+                setDateOfBirth(e.target.value)
+              }
+            />
+          )}
+        </div>
+        <div>
+          govermentId: {doctor.government_id}
+          {type === "admin" && (
+            <input
+              required
+              id="outlined-required"
+              label="ID Number"
+              value={governmentId}
+              onChange={(e) =>
+                setGovernmentId(e.target.value)
+              }
+            />
+          )}
+        </div>
+        <div>
+          departmentId: {doctor.departmentId}
+          {type === "admin" && (
+            <input
+              required
+              id="outlined-required"
+              label="Department ID"
+              value={departmentID}
+              onChange={(e) =>
+                setDepartmentID(e.target.value)
+              }
+            />
+          )}
+        </div>
+        <div>
+          contactNumber: {doctor.contact_number}
+          {type === "admin" && (
+            <input
+              required
+              id="outlined-required"
+              label="Contact Number"
+              value={contactNumber}
+              onChange={(e) =>
+                setContactNumber(e.target.value)
+              }
+            />
+          )}
+        </div>
+        <div>
+          address: {doctor.address}
+          {type === "admin" && (
+            <input
+              required
+              id="outlined-required"
+              label="Address"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+            />
+          )}
+        </div>
+        <div>
+          specializationDetailsId:{" "}
+          {doctor.specializationDetailsId}
+          {type === "admin" && (
+            <input
+              required
+              id="outlined-required"
+              label="Specialization Details ID"
+              value={specializationDetailsID}
+              onChange={(e) =>
+                setSpecializationDepartmentID(
+                  e.target.value
+                )
+              }
+            />
+          )}
+        </div>
+        <div>
+          experienceInYear: {doctor.experience_in_year}
+          {type === "admin" && (
+            <input
+              required
+              id="outlined-required"
+              label="Experience in Years"
+              value={experienceInYear}
+              onChange={(e) =>
+                setExperienceInYear(e.target.value)
+              }
+            />
+          )}
+        </div>
+        <div>
+          category: {doctor.category}
+          {type === "admin" && (
+            <TextField
+              id="outlined-select-currency"
+              required
+              select
+              label="Category"
+              value={category}
+              onChange={handleChange}
+              inputProps={{ style: { fontSize: 18 } }}
+              helperText="Please select your Category">
+              {categories.map((option) => (
+                <MenuItem
+                  key={option.value}
+                  value={option.value}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </TextField>
+          )}
+        </div>
+        <div>
+          degree: {doctor.degree}
+          {type === "admin" && (
+            <input
+              required
+              id="outlined-required"
+              label="Degree"
+              value={degree}
+              onChange={(e) => setDegree(e.target.value)}
+            />
+          )}
+        </div>
+        <div>
+          rating: {doctor.rating}
+          {type === "admin" && (
+            <input
+              required
+              id="outlined-required"
+              label="Rating"
+              value={rating}
+              onChange={(e) => setRating(e.target.value)}
+            />
+          )}
+        </div>
         {type === "admin" && (
-          <input
-            type="file"
-            onChange={(e) => setFile(e.target.files[0])}
-          />
+          <>
+            <Button
+              onClick={modifyDoctor}
+              variant="contained">
+              Save changes
+            </Button>
+            <Button
+              onClick={deleteDoctor}
+              variant="contained">
+              Delete
+            </Button>
+            <Link to="/personalAdmin">
+              <Button variant="contained">Go Back</Button>
+            </Link>
+          </>
         )}
-      </div>
-      <div>
-        Name : {doctor.name}
-        {type === "admin" && (
-          <TextField
-            required
-            id="outlined-required"
-            label="First Name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        )}
-      </div>
-      <div>
-        Surname : {doctor.surname}
-        {type === "admin" && (
-          <TextField
-            required
-            id="outlined-required"
-            label="Surname"
-            value={surname}
-            onChange={(e) => setSurname(e.target.value)}
-          />
-        )}
-      </div>
-      <div>
-        Middle Name : {doctor.middleName}
-        {type === "admin" && (
-          <TextField
-            required
-            id="outlined-required"
-            label="Middle Name"
-            value={middleName}
-            onChange={(e) => setMiddleName(e.target.value)}
-          />
-        )}
-      </div>
-      <div>
-        email: {doctor.email}
-        {type === "admin" && (
-          <TextField
-            id="outlined"
-            label="E-mail"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        )}
-      </div>
-      <div>
-        iin: {doctor.iin}
-        {type === "admin" && (
-          <TextField
-            required
-            id="outlined-required"
-            label="IIN Number"
-            value={iin}
-            onChange={(e) => setIin(e.target.value)}
-          />
-        )}
-      </div>
-      <div>
-        dateOfBirth: {doctor.date_of_birth}
-        {type === "admin" && (
-          <TextField
-            required
-            type="date"
-            id="outlined-required"
-            value={dateOfBirth}
-            onChange={(e) => setDateOfBirth(e.target.value)}
-          />
-        )}
-      </div>
-      <div>
-        govermentId: {doctor.government_id}
-        {type === "admin" && (
-          <TextField
-            required
-            id="outlined-required"
-            label="ID Number"
-            value={governmentId}
-            onChange={(e) =>
-              setGovernmentId(e.target.value)
-            }
-          />
-        )}
-      </div>
-      <div>
-        departmentId: {doctor.departmentId}
-        {type === "admin" && (
-          <TextField
-            required
-            id="outlined-required"
-            label="Department ID"
-            value={departmentID}
-            onChange={(e) =>
-              setDepartmentID(e.target.value)
-            }
-          />
-        )}
-      </div>
-      <div>
-        contactNumber: {doctor.contact_number}
-        {type === "admin" && (
-          <TextField
-            required
-            id="outlined-required"
-            label="Contact Number"
-            value={contactNumber}
-            onChange={(e) =>
-              setContactNumber(e.target.value)
-            }
-          />
-        )}
-      </div>
-      <div>
-        address: {doctor.address}
-        {type === "admin" && (
-          <TextField
-            required
-            id="outlined-required"
-            label="Address"
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-          />
-        )}
-      </div>
-      <div>
-        specializationDetailsId:{" "}
-        {doctor.specializationDetailsId}
-        {type === "admin" && (
-          <TextField
-            required
-            id="outlined-required"
-            label="Specialization Details ID"
-            value={specializationDetailsID}
-            onChange={(e) =>
-              setSpecializationDepartmentID(e.target.value)
-            }
-          />
-        )}
-      </div>
-      <div>
-        experienceInYear: {doctor.experience_in_year}
-        {type === "admin" && (
-          <TextField
-            required
-            id="outlined-required"
-            label="Experience in Years"
-            value={experienceInYear}
-            onChange={(e) =>
-              setExperienceInYear(e.target.value)
-            }
-          />
-        )}
-      </div>
-      <div>
-        category: {doctor.category}
-        {type === "admin" && (
-          <TextField
-            id="outlined-select-currency"
-            required
-            select
-            label="Category"
-            value={category}
-            onChange={handleChange}
-            helperText="Please select your Category">
-            {categories.map((option) => (
-              <MenuItem
-                key={option.value}
-                value={option.value}>
-                {option.label}
-              </MenuItem>
-            ))}
-          </TextField>
-        )}
-      </div>
-      <div>
-        degree: {doctor.degree}
-        {type === "admin" && (
-          <TextField
-            required
-            id="outlined-required"
-            label="Degree"
-            value={degree}
-            onChange={(e) => setDegree(e.target.value)}
-          />
-        )}
-      </div>
-      <div>
-        rating: {doctor.rating}
-        {type === "admin" && (
-          <TextField
-            required
-            id="outlined-required"
-            label="Rating"
-            value={rating}
-            onChange={(e) => setRating(e.target.value)}
-          />
-        )}
-      </div>
-      {type === "admin" && (
-        <>
-          <Button
-            onClick={modifyDoctor}
-            variant="contained">
-            Save changes
-          </Button>
-          <Button
-            onClick={deleteDoctor}
-            variant="contained">
-            Delete
-          </Button>
-          <Link to="/personalAdmin">
+
+        {typeUser === "doctor" && (
+          <Link to="/">
             <Button variant="contained">Go Back</Button>
           </Link>
-        </>
-      )}
-
-      {typeUser === "doctor" && (
-        <Link to="/">
-          <Button variant="contained">Go Back</Button>
-        </Link>
-      )}
+        )}
+      </div>
     </div>
   );
 };
