@@ -120,13 +120,13 @@ const RegisterDoctor = () => {
         autoComplete="off"
         className={classes.form}>
         <div>
+          Avatar:
           <input
             required
             type="file"
             onChange={(e) => setFile(e.target.files[0])}
           />
           <p>Personal Information:</p>
-
           <TextField
             required
             id="outlined-required"
@@ -134,7 +134,6 @@ const RegisterDoctor = () => {
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
-
           <TextField
             required
             id="outlined-required"
@@ -155,7 +154,6 @@ const RegisterDoctor = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
-
           <TextField
             required
             id="outlined-required"
@@ -188,7 +186,6 @@ const RegisterDoctor = () => {
               setDepartmentID(e.target.value)
             }
           />
-
           <p className={classes.text}>
             Contact Information:
           </p>
@@ -252,7 +249,6 @@ const RegisterDoctor = () => {
             value={degree}
             onChange={(e) => setDegree(e.target.value)}
           />
-
           <p className={classes.text}>Other Information:</p>
           <TextField
             required

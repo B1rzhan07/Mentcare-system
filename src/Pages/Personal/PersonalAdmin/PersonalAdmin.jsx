@@ -60,7 +60,6 @@ const PersonalAdmin = () => {
           );
           setDoctors(response.data.allDoctors);
         });
-        
     } catch (err) {
       console.log(err.message);
     }
@@ -103,8 +102,6 @@ const PersonalAdmin = () => {
             </tr>
           </thead>
           <tbody>
-            {console.log(clickedPatient)}
-            {console.log(clickedDoctor)}
             {clickedPatient &&
               patients.map((patient) => (
                 <tr key={patient.id}>
@@ -123,7 +120,6 @@ const PersonalAdmin = () => {
             {clickedDoctor &&
               doctors.map((doctor) => (
                 <tr key={doctor.id}>
-                  <th scope="row">1</th>
                   <td>{doctor.id}.</td>
                   <td>{doctor.name}</td>
                   <td>{doctor.surname}</td>
