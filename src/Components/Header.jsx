@@ -24,6 +24,7 @@ import { useDispatch } from "react-redux";
 import {
   setDataPatients,
   setDataDoctors,
+  fetchUsers,
 } from "../Redux/Slices/userSlice";
 import axios from "axios";
 
@@ -62,8 +63,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 
 const Header = () => {
   const dispatch = useDispatch();
-  if (localStorage.getItem("token")) {
-  }
+
   const { isAuth, type } = useSelector(
     (state) => state.user
   );
@@ -95,7 +95,6 @@ const Header = () => {
       console.log(err.message);
     }
   }, [localStorage.getItem("type")]);
-  console.log(user);
 
   const navigate = useNavigate();
   const theme = useTheme();
@@ -119,23 +118,29 @@ const Header = () => {
     window.location.replace("/");
   };
   const logged = localStorage.getItem("token");
+  if (logged === "admin") {
+    fetchUsers();
+    console.log("admin");
+  }
 
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
       <AppBar position="static" open={open}>
         <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            sx={{
-              mr: 2,
-              ...(open && { display: "none" }),
-            }}>
-            {localStorage.getItem("token") && <MenuIcon />}
-          </IconButton>
+          {localStorage.getItem("token") && (
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              onClick={handleDrawerOpen}
+              edge="start"
+              sx={{
+                mr: 2,
+                ...(open && { display: "none" }),
+              }}>
+              <MenuIcon />
+            </IconButton>
+          )}
 
           <Typography
             component={"div"}
@@ -144,11 +149,10 @@ const Header = () => {
             sx={{ flexGrow: 1 }}>
             LinkDenSis.Me
           </Typography>
-          {console.log(isAuth, logged)}
+          {localStorage.getItem("email")}
           {logged ? (
             <div>
               <h4>
-                {localStorage.getItem("email")}
                 <LogoutIcon onClick={logout} />
               </h4>
             </div>
