@@ -5,17 +5,17 @@ import RegisterDoctor from "./Pages/Registration/RegisterDoctor";
 import PersonalAdmin from "./Pages/Personal/PersonalAdmin/PersonalAdmin";
 import PersonalPatient from "./Pages/Personal/PersonalPatient/PersonalPatient";
 import PersonalDoctor from "./Pages/Personal/PersonalDoctor/PersonalDoctor";
+import Department from "./Pages/Departments/Department";
 
 function App() {
   return (
-    <div>
+    <div className="wrapper-main">
       <Routes>
         <Route
           path="/registerPatient"
           exact
           element={<RegisterPatient />}
         />
-        fwfw
         <Route
           path="/personalAdmin"
           exact
@@ -30,6 +30,10 @@ function App() {
         <Route
           path="/Patient/:id"
           element={<PersonalPatient />}
+        />
+        <Route
+          path="/Department/:id"
+          element={<Department />}
         />
         <Route
           path="/Doctor/:id"

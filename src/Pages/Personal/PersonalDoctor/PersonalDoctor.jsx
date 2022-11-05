@@ -14,7 +14,6 @@ const PersonalDoctor = () => {
   const { id } = useParams();
   const { doctors } = useSelector((state) => state.user);
   const typeUser = localStorage.getItem("type");
-  console.log(doctors);
   var doctor = [];
   if (typeUser === "doctor") {
     doctor = doctors;
@@ -36,6 +35,9 @@ const PersonalDoctor = () => {
   const handleChange = (event) => {
     setCategory(event.target.value);
   };
+  const { departments } = useSelector(
+    (state) => state.department
+  );
 
   const [name, setName] = React.useState(`${doctor.name}`);
   const [surname, setSurname] = React.useState(
@@ -121,7 +123,7 @@ const PersonalDoctor = () => {
   const type = localStorage.getItem("type");
   const deleteDoctor = async () => {
     try {
-      const response = await axios({
+      await axios({
         method: "delete",
         url: `http://localhost:8800/api/myPage/admin/doctor/${id}`,
         headers: {
@@ -225,7 +227,7 @@ const PersonalDoctor = () => {
           )}
         </div>
         <div>
-          govermentId: {doctor.government_id}
+          Goverment Id: {doctor.government_id}
           {type === "admin" && (
             <input
               required
@@ -241,15 +243,23 @@ const PersonalDoctor = () => {
         <div>
           departmentId: {doctor.departmentId}
           {type === "admin" && (
-            <input
+            <TextField
               required
+              select
               id="outlined-required"
               label="Department ID"
               value={departmentID}
               onChange={(e) =>
                 setDepartmentID(e.target.value)
               }
-            />
+              helperText="Please select Department">
+              {departments.map((option) => (
+                <MenuItem key={option.id} value={option.id}>
+                  {option.department_name}
+                </MenuItem>
+              ))}
+              >
+            </TextField>
           )}
         </div>
         <div>

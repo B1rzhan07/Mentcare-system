@@ -44,7 +44,6 @@ const PersonalAdmin = () => {
     setClickedDoctor(false);
     setClickedPatient(true);
   };
-
   const getDoctors = () => {
     try {
       axios

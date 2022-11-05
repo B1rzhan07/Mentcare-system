@@ -10,10 +10,9 @@ import { useSelector } from "react-redux";
 import Modal from "./Modal/Modal";
 import { useNavigate } from "react-router-dom";
 import LogoutIcon from "@mui/icons-material/Logout";
-import { styled, useTheme } from "@mui/material/styles";
+import { useTheme } from "@mui/material/styles";
 import Drawer from "@mui/material/Drawer";
 import CssBaseline from "@mui/material/CssBaseline";
-import MuiAppBar from "@mui/material/AppBar";
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
@@ -26,47 +25,54 @@ import {
   setDataDoctors,
   fetchUsers,
 } from "../Redux/Slices/userSlice";
-import axios from "axios";
+import { fetchDepartments } from "../Redux/Slices/departmentSlice";
+import axios from "../api/axios";
+import {
+  AppBar,
+  DrawerHeader,
+} from "../assets/Header.css/HeaderAsset";
 
 const drawerWidth = 300;
 
-const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== "open",
-})(({ theme, open }) => ({
-  transition: theme.transitions.create(
-    ["margin", "width"],
-    {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }
-  ),
-  ...(open && {
-    width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: `${drawerWidth}px`,
-    transition: theme.transitions.create(
-      ["margin", "width"],
-      {
-        easing: theme.transitions.easing.easeOut,
-        duration: theme.transitions.duration.enteringScreen,
-      }
-    ),
-  }),
-}));
+// const AppBar = styled(MuiAppBar, {
+//   shouldForwardProp: (prop) => prop !== "open",
+// })(({ theme, open }) => ({
+//   transition: theme.transitions.create(
+//     ["margin", "width"],
+//     {
+//       easing: theme.transitions.easing.sharp,
+//       duration: theme.transitions.duration.leavingScreen,
+//     }
+//   ),
+//   ...(open && {
+//     width: `calc(100% - ${drawerWidth}px)`,
+//     marginLeft: `${drawerWidth}px`,
+//     transition: theme.transitions.create(
+//       ["margin", "width"],
+//       {
+//         easing: theme.transitions.easing.easeOut,
+//         duration: theme.transitions.duration.enteringScreen,
+//       }
+//     ),
+//   }),
+// }));
 
-const DrawerHeader = styled("div")(({ theme }) => ({
-  display: "flex",
-  alignItems: "center",
-  padding: theme.spacing(0, 1),
-  ...theme.mixins.toolbar,
-  justifyContent: "flex-end",
-}));
+// const DrawerHeader = styled("div")(({ theme }) => ({
+//   display: "flex",
+//   alignItems: "center",
+//   padding: theme.spacing(0, 1),
+//   ...theme.mixins.toolbar,
+//   justifyContent: "flex-end",
+// }));
 
 const Header = () => {
   const dispatch = useDispatch();
 
-  const { isAuth, type } = useSelector(
-    (state) => state.user
-  );
+  const { type } = useSelector((state) => state.user);
+
+  React.useEffect(() => {
+    dispatch(fetchDepartments());
+  }, []);
   const typeUser = localStorage.getItem("type");
   const [user, setUser] = React.useState();
   React.useEffect(() => {

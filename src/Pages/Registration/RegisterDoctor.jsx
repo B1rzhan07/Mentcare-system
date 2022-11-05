@@ -7,6 +7,7 @@ import { Button } from "@mui/material";
 import axios from "axios";
 import MenuItem from "@mui/material/MenuItem";
 import { categories } from "../../assets/Personal/personal";
+import { useSelector } from "react-redux";
 const RegisterDoctor = () => {
   const [category, setCategory] = React.useState("");
   const handleChange = (event) => {
@@ -37,7 +38,6 @@ const RegisterDoctor = () => {
   const [degree, setDegree] = React.useState("");
   const [rating, setRating] = React.useState("");
   const [file, setFile] = React.useState(null);
-  const formData = new FormData();
   const registerDoctor = async () => {
     const formData = new FormData();
     formData.append("photo", file);
@@ -96,6 +96,10 @@ const RegisterDoctor = () => {
       console.log(error);
     }
   };
+  const { departments } = useSelector(
+    (state) => state.department
+  );
+  console.log(departmentID);
 
   return (
     <div className={classes.main}>
@@ -177,13 +181,20 @@ const RegisterDoctor = () => {
           />
           <TextField
             required
+            select
             id="outlined-required"
             label="Department ID"
             value={departmentID}
             onChange={(e) =>
               setDepartmentID(e.target.value)
             }
-          />
+            helperText="Please select Department">
+            {departments.map((option) => (
+              <MenuItem key={option.id} value={option.id}>
+                {option.department_name}
+              </MenuItem>
+            ))}
+          </TextField>
           <p className={classes.text}>
             Contact Information:
           </p>
