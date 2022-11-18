@@ -9,3 +9,25 @@
         text-decoration: none;
     }
 }
+
+.login {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+
+.title {
+    width: 100px;
+    border-radius: 15px;
+    padding: 5px;
+    &:hover {
+        transform: translateY(-5px);
+    }
+}
+
+.toolBar {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+}

@@ -89,6 +89,7 @@ const RegisterDoctor = () => {
       setExperienceInYear("");
       setDegree("");
       setRating("");
+      setFile(null);
       if (response.status === 200) {
         alert("Doctor registered successfully!");
       }

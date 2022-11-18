@@ -6,6 +6,7 @@ import PersonalAdmin from "./Pages/Personal/PersonalAdmin/PersonalAdmin";
 import PersonalPatient from "./Pages/Personal/PersonalPatient/PersonalPatient";
 import PersonalDoctor from "./Pages/Personal/PersonalDoctor/PersonalDoctor";
 import Department from "./Pages/Departments/Department";
+import Services from "./Pages/Services/Services";
 
 function App() {
   return (
@@ -26,11 +27,11 @@ function App() {
           exact
           element={<RegisterDoctor />}
         />
-        <Route path="/" exact element={<Home />} />
+        <Route path="/" exact element={<Home />} />{" "}
         <Route
           path="/Patient/:id"
           element={<PersonalPatient />}
-        />
+        />{" "}
         <Route
           path="/Department/:id"
           element={<Department />}
@@ -39,7 +40,11 @@ function App() {
           path="/Doctor/:id"
           element={<PersonalDoctor />}
         />
-      </Routes>
+        <Route
+          path="/services/:id"
+          element={<Services />}
+        />
+      </Routes>{" "}
     </div>
   );
 }

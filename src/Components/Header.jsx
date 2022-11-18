@@ -31,50 +31,23 @@ import {
   AppBar,
   DrawerHeader,
 } from "../assets/Header.css/HeaderAsset";
+import classes from "./Header.module.scss";
+import { fetchServices } from "../Redux/Slices/serviceSlice";
 
 const drawerWidth = 300;
 
-// const AppBar = styled(MuiAppBar, {
-//   shouldForwardProp: (prop) => prop !== "open",
-// })(({ theme, open }) => ({
-//   transition: theme.transitions.create(
-//     ["margin", "width"],
-//     {
-//       easing: theme.transitions.easing.sharp,
-//       duration: theme.transitions.duration.leavingScreen,
-//     }
-//   ),
-//   ...(open && {
-//     width: `calc(100% - ${drawerWidth}px)`,
-//     marginLeft: `${drawerWidth}px`,
-//     transition: theme.transitions.create(
-//       ["margin", "width"],
-//       {
-//         easing: theme.transitions.easing.easeOut,
-//         duration: theme.transitions.duration.enteringScreen,
-//       }
-//     ),
-//   }),
-// }));
-
-// const DrawerHeader = styled("div")(({ theme }) => ({
-//   display: "flex",
-//   alignItems: "center",
-//   padding: theme.spacing(0, 1),
-//   ...theme.mixins.toolbar,
-//   justifyContent: "flex-end",
-// }));
-
 const Header = () => {
   const dispatch = useDispatch();
-
   const { type } = useSelector((state) => state.user);
 
   React.useEffect(() => {
     dispatch(fetchDepartments());
+    dispatch(fetchServices());
   }, []);
+
   const typeUser = localStorage.getItem("type");
   const [user, setUser] = React.useState();
+
   React.useEffect(() => {
     try {
       axios
@@ -130,7 +103,7 @@ const Header = () => {
   }
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: "flex", height: 100 }}>
       <CssBaseline />
       <AppBar position="static" open={open}>
         <Toolbar>
@@ -147,20 +120,22 @@ const Header = () => {
               <MenuIcon />
             </IconButton>
           )}
-
           <Typography
             component={"div"}
+            className={classes.title}
             to="/"
             variant="h6"
-            sx={{ flexGrow: 1 }}>
-            LinkDenSis.Me
+            sx={{ flexGrow: 0.9 }}
+            onClick={() => navigate("/")}>
+            DenSys.Me
           </Typography>
-          {localStorage.getItem("email")}
+
           {logged ? (
-            <div>
-              <h4>
-                <LogoutIcon onClick={logout} />
-              </h4>
+            <div className={classes.login}>
+              <span className={classes.login}>
+                {localStorage.getItem("email")}{" "}
+              </span>
+              <LogoutIcon size="small" onClick={logout} />
             </div>
           ) : (
             <span>
