@@ -103,7 +103,7 @@ const Header = () => {
   }
 
   return (
-    <Box sx={{ display: "flex", height: 100 }}>
+    <Box sx={{ display: "flex", height: 70 }}>
       <CssBaseline />
       <AppBar position="static" open={open}>
         <Toolbar>

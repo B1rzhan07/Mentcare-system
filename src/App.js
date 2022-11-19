@@ -31,7 +31,7 @@ function App() {
         <Route
           path="/Patient/:id"
           element={<PersonalPatient />}
-        />{" "}
+        />
         <Route
           path="/Department/:id"
           element={<Department />}
@@ -44,7 +44,7 @@ function App() {
           path="/services/:id"
           element={<Services />}
         />
-      </Routes>{" "}
+      </Routes>
     </div>
   );
 }

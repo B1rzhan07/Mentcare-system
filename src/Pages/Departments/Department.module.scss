@@ -1,0 +1,30 @@
+.card {
+    margin-left: 20px;
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.services {
+    display: flex;
+    justify-content: space-around;
+}
+
+.num {
+    display: flex;
+    justify-content: center;
+}
+
+.content {
+    justify-content: center;
+    margin-left: 10px;
+}
+
+.img {
+    border: 2px solid #ddd;
+    border-radius: 3px;
+    padding: 5px;
+    width: 350px;
+    padding: 25px;
+}
