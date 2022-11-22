@@ -3,9 +3,16 @@ import Header from "../../Components/Header";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { Button } from "@mui/material";
-import DataPicker from "../../Components/DataPicker";
-
+import DataPicker from "../../assets/Service/DataPicker";
+import ServiceSelect from "../../assets/Service/ServiceSelect";
+import ServiceDoctor from "../../assets/Service/ServiceDoctor";
+import axios from "../../api/axios";
 const Services = () => {
+  const [name, setName] = React.useState("");
+  const [surname, setSurname] = React.useState("");
+
+  const { selectedDate, selectedTime, selectedDoctor } =
+    useSelector((state) => state.appointment);
   const { services } = useSelector(
     (state) => state.service
   );
@@ -18,7 +25,31 @@ const Services = () => {
     (doctor) => doctor.departmentId == service.departmentId
   );
   const auth = localStorage.getItem("token");
+  // const { ServiceDoctor } = useSelector(
+  //   (state) => state.service
+  // );
 
+  const makeAppointment = async () => {
+    try {
+      const res = await axios.post(
+        `/services/${id}/appointment`,
+        {
+          name,
+          surname,
+          startDate: selectedTime,
+          doctorId: 2,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${auth}`,
+          },
+        }
+      );
+      console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <div>
       <Header />
@@ -39,16 +70,29 @@ const Services = () => {
           </b>
         </div>
       ))}
+
+      <div>
+        <DataPicker id={id} />
+        <ServiceSelect />
+        <ServiceDoctor />
+        <input
+          type="text"
+          onChange={(e) => setName(e.target.value)}
+        />
+        <input
+          type="text"
+          onChange={(e) => setSurname(e.target.value)}
+        />
+      </div>
       {auth ? (
-        <Button variant="contained">
+        <Button
+          variant="contained"
+          onClick={makeAppointment}>
           Make an Appointment
         </Button>
       ) : (
         <div>Log in to make an appointment</div>
       )}
-      <div>
-        <DataPicker id={id} />
-      </div>
     </div>
   );
 };

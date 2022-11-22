@@ -13,60 +13,68 @@ import { maritalStatuses } from "../../../assets/Personal/personal";
 const PersonalPatient = () => {
   const typeUser = localStorage.getItem("type");
   const { patients } = useSelector((state) => state.user);
-
+  console.log(patients);
   const { id } = useParams();
-
+  console.log(id);
   var patient = [];
-  if (patients.length === 0) {
-    patient = patients;
-  }
+
   if (typeUser === "patient") {
     patient = patients;
   }
-  if (patients.length > 1) {
-    patient = patients.find((patient) => patient.id == id);
+
+  console.log(patients.id);
+  if (typeUser === "admin") {
+    patient = patients.filter(
+      (patient) => patient.id == id
+    );
   }
+  // }
+  console.log(patient);
 
   const [bloodGroup, setBloodGroup] = React.useState(
-    `${patient.blood_group}`
+    `${patient[0].blood_group}`
   );
   const handleChange1 = (event) => {
     setBloodGroup(event.target.value);
   };
   const [maritalStatus, setMaritalStatus] = React.useState(
-    `${patient.marital_status}`
+    `${patient[0].marital_status}`
   );
   const handleChange2 = (event) => {
     setMaritalStatus(event.target.value);
   };
 
-  const [name, setName] = React.useState(`${patient.name}`);
+  const [name, setName] = React.useState(
+    `${patient[0].name}`
+  );
   const [surname, setSurname] = React.useState(
-    `${patient.surname}`
+    `${patient[0].surname}`
   );
   const [middleName, setMiddleName] = React.useState(
-    `${patient.middle_name}`
+    `${patient[0].middle_name}`
   );
   const [emergencyContactNumber, setEmergencyContact] =
-    React.useState(`${patient.emergency_contact_number}`);
+    React.useState(
+      `${patient[0].emergency_contact_number}`
+    );
   const [contactNumber, setContactNumber] = React.useState(
-    `${patient.contact_number}`
+    `${patient[0].contact_number}`
   );
-  const [iin, setIin] = React.useState(`${patient.iin}`);
+  const [iin, setIin] = React.useState(`${patient[0].iin}`);
   const [governmentId, setGovernmentId] = React.useState(
-    `${patient.government_id}`
+    `${patient[0].government_id}`
   );
   const [dateOfBirth, setDateOfBirth] = React.useState(
-    `${patient.date_of_birth}`
+    `${patient[0].date_of_birth}`
   );
   const [address, setAddress] = React.useState(
-    `${patient.address}`
+    `${patient[0].address}`
   );
   const [email, setEmail] = React.useState(
-    `${patient.email}`
+    `${patient[0].email}`
   );
   const [optionalDetails, setOptionalDetails] =
-    React.useState(`${patient.optional_details}`);
+    React.useState(`${patient[0].optional_details}`);
   const modifyPatient = async () => {
     try {
       const response = await axios.patch(
@@ -102,7 +110,7 @@ const PersonalPatient = () => {
   const deletePatient = async () => {
     try {
       const response = await axios.delete(
-        `http://localhost:8800/api/myPage/admin/patient/${id}`,
+        `http://localhost:8800/api/myPage/admin/user/${patient[0].userId}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem(
@@ -121,16 +129,15 @@ const PersonalPatient = () => {
 
   return (
     <>
-      <div></div>
       <Header />
       <div className={classes.wrapper}>
         <h1>
-          Personal Information of {patient.name}
-          {patient.surname}
+          Personal Information of {patient[0].name}
+          {patient[0].surname}
         </h1>
         <div>
           <div>
-            Name: {patient.name}
+            Name: {patient[0].name}
             {typeUser === "admin" && (
               <input
                 id="outlined-required"
@@ -142,7 +149,7 @@ const PersonalPatient = () => {
           </div>
 
           <div>
-            Surname: {patient.surname || "No data"}
+            Surname: {patient[0].surname || "No data"}
             {typeUser === "admin" && (
               <input
                 required
@@ -153,7 +160,7 @@ const PersonalPatient = () => {
               />
             )}
             <div>
-              Middle Name: {patient.middle_name}
+              Middle Name: {patient[0].middle_name}
               {typeUser === "admin" && (
                 <input
                   required
@@ -168,7 +175,7 @@ const PersonalPatient = () => {
             </div>
           </div>
           <div className={classes.blood}>
-            Blood Group: {patient.blood_group}
+            Blood Group: {patient[0].blood_group}
             {typeUser === "admin" && (
               <TextField
                 id="outlined-select-currency"
@@ -190,7 +197,7 @@ const PersonalPatient = () => {
             )}
           </div>
           <div>
-            iin: {patient.iin}
+            iin: {patient[0].iin}
             {typeUser === "admin" && (
               <input
                 required
@@ -202,7 +209,7 @@ const PersonalPatient = () => {
             )}
           </div>
           <div>
-            date of birth: {patient.date_of_birth}
+            date of birth: {patient[0].date_of_birth}
             {typeUser === "admin" && (
               <input
                 required
@@ -216,7 +223,7 @@ const PersonalPatient = () => {
             )}
           </div>
           <div>
-            government id: {patient.government_id}
+            government id: {patient[0].government_id}
             {typeUser === "admin" && (
               <input
                 required
@@ -231,7 +238,7 @@ const PersonalPatient = () => {
           </div>
 
           <div>
-            Marital Status: {patient.marital_status}
+            Marital Status: {patient[0].marital_status}
             {typeUser === "admin" && (
               <TextField
                 id="outlined-select-currency"
@@ -253,7 +260,7 @@ const PersonalPatient = () => {
           </div>
           <div>
             emergency contact number:{" "}
-            {patient.emergency_contact_number}
+            {patient[0].emergency_contact_number}
             {typeUser === "admin" && (
               <input
                 required
@@ -267,7 +274,7 @@ const PersonalPatient = () => {
             )}
           </div>
           <div>
-            contact number: {patient.contact_number}
+            contact number: {patient[0].contact_number}
             {typeUser === "admin" && (
               <input
                 required
@@ -281,7 +288,7 @@ const PersonalPatient = () => {
             )}
           </div>
           <div>
-            email: {patient.email}
+            email: {patient[0].email}
             {typeUser === "admin" && (
               <input
                 id="outlined"
@@ -292,7 +299,7 @@ const PersonalPatient = () => {
             )}
           </div>
           <div>
-            address: {patient.address}
+            address: {patient[0].address}
             {typeUser === "admin" && (
               <input
                 required
@@ -304,7 +311,7 @@ const PersonalPatient = () => {
             )}
           </div>
           <div>
-            optional details: {patient.optional_details}
+            optional details: {patient[0].optional_details}
             {typeUser === "admin" && (
               <input
                 id="outlined-multiline-static"

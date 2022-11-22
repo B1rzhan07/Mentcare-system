@@ -31,3 +31,9 @@
     justify-content: space-between;
     flex-wrap: nowrap;
 }
+
+.listItem {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+}

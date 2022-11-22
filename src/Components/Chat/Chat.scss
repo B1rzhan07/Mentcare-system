@@ -1,0 +1,38 @@
+.chat {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+}
+
+.chat.mine {
+    align-items: flex-end;
+}
+
+.chat.mine.chatText {
+    background-color: darkcyan;
+}
+
+.chatImg {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+}
+
+.chatTop {
+    display: flex;
+}
+
+.chatText {
+    padding: 10px;
+    border-radius: 20px;
+    background-color: rgb(160, 160, 206);
+    color: white;
+    max-width: 200px;
+}
+
+.chatBottom {
+    font-size: 12px;
+    margin-top: -15px;
+}

@@ -15,22 +15,16 @@ const PersonalDoctor = () => {
   const { doctors } = useSelector((state) => state.user);
   const typeUser = localStorage.getItem("type");
   var doctor = [];
-  if (typeUser === "doctor") {
-    doctor = doctors;
-    console.log(doctor);
-  }
-  if (doctors.length === 0) {
-    doctor = doctors;
-    console.log(doctor);
-  }
 
-  if (doctors.length > 1) {
-    doctor = doctors.find((doctor) => doctor.id == id);
-    console.log(doctor);
+  if (typeUser == "doctor") {
+    doctor = doctors;
+  }
+  if (typeUser == "admin") {
+    doctor = doctors.filter((doctor) => doctor.id == id);
   }
 
   const [category, setCategory] = React.useState(
-    `${doctor.category}`
+    `${doctor[0].category}`
   );
   const handleChange = (event) => {
     setCategory(event.target.value);
@@ -39,47 +33,51 @@ const PersonalDoctor = () => {
     (state) => state.department
   );
 
-  const [name, setName] = React.useState(`${doctor.name}`);
+  const [name, setName] = React.useState(
+    `${doctor[0].name}`
+  );
   const [surname, setSurname] = React.useState(
-    `${doctor.surname}`
+    `${doctor[0].surname}`
   );
   const [middleName, setMiddleName] = React.useState(
-    `${doctor.middle_name}`
+    `${doctor[0].middle_name}`
   );
   const [contactNumber, setContactNumber] = React.useState(
-    `${doctor.contact_number}`
+    `${doctor[0].contact_number}`
   );
-  const [iin, setIin] = React.useState(`${doctor.iin}`);
+  const [iin, setIin] = React.useState(`${doctor[0].iin}`);
   const [governmentId, setGovernmentId] = React.useState(
-    `${doctor.government_id}`
+    `${doctor[0].government_id}`
   );
   const [dateOfBirth, setDateOfBirth] = React.useState(
-    `${doctor.date_of_birth}`
+    `${doctor[0].date_of_birth}`
   );
   const [address, setAddress] = React.useState(
-    `${doctor.address}`
+    `${doctor[0].address}`
   );
   const [email, setEmail] = React.useState(
-    `${doctor.email}`
+    `${doctor[0].email}`
   );
   const [optionalDetails, setOptionalDetails] =
     React.useState("kabdik mal");
   const [departmentID, setDepartmentID] = React.useState(
-    `${doctor.departmentId}`
+    `${doctor[0].departmentId}`
   );
   const [
     specializationDetailsID,
     setSpecializationDepartmentID,
   ] = React.useState(1);
   const [experienceInYear, setExperienceInYear] =
-    React.useState(`${doctor.experience_in_year}`);
+    React.useState(`${doctor[0].experience_in_year}`);
   const [degree, setDegree] = React.useState(
-    `${doctor.degree}`
+    `${doctor[0].degree}`
   );
   const [rating, setRating] = React.useState(
-    `${doctor.rating}`
+    `${doctor[0].rating}`
   );
-  const [file, setFile] = React.useState(`${doctor.photo}`);
+  const [file, setFile] = React.useState(
+    `${doctor[0].photo}`
+  );
 
   const modifyDoctor = async () => {
     const formData = new FormData();
@@ -125,7 +123,7 @@ const PersonalDoctor = () => {
     try {
       await axios({
         method: "delete",
-        url: `http://localhost:8800/api/myPage/admin/doctor/${id}`,
+        url: `http://localhost:8800/api/myPage/admin/user/${doctor[0].userId}`,
         headers: {
           Authorization: `Bearer ${localStorage.getItem(
             "token"
@@ -141,9 +139,9 @@ const PersonalDoctor = () => {
     <div>
       <Header />
       <div className={classes.wrapper}>
-        <h1>Personal Doctor {doctor.name}</h1>
+        <h1>Personal Doctor {doctor[0].name}</h1>
         <div>
-          <img src={doctor.photo} alt="here" />
+          <img src={doctor[0].photo} alt="here" />
           {type === "admin" && (
             <input
               type="file"
@@ -152,7 +150,7 @@ const PersonalDoctor = () => {
           )}
         </div>
         <div>
-          Name: {doctor.name}
+          Name: {doctor[0].name}
           {type === "admin" && (
             <input
               required
@@ -164,7 +162,7 @@ const PersonalDoctor = () => {
           )}
         </div>
         <div>
-          Surname: {doctor.surname}
+          Surname: {doctor[0].surname}
           {type === "admin" && (
             <input
               required
@@ -176,7 +174,7 @@ const PersonalDoctor = () => {
           )}
         </div>
         <div>
-          Middle Name: {doctor.middle_name}
+          Middle Name: {doctor[0].middle_name}
           {type === "admin" && (
             <input
               required
@@ -190,7 +188,7 @@ const PersonalDoctor = () => {
           )}
         </div>
         <div>
-          email: {doctor.email}
+          email: {doctor[0].email}
           {type === "admin" && (
             <input
               id="outlined"
@@ -201,7 +199,7 @@ const PersonalDoctor = () => {
           )}
         </div>
         <div>
-          iin: {doctor.iin}
+          iin: {doctor[0].iin}
           {type === "admin" && (
             <input
               required
@@ -213,7 +211,7 @@ const PersonalDoctor = () => {
           )}
         </div>
         <div>
-          dateOfBirth: {doctor.date_of_birth}
+          dateOfBirth: {doctor[0].date_of_birth}
           {type === "admin" && (
             <input
               required
@@ -227,7 +225,7 @@ const PersonalDoctor = () => {
           )}
         </div>
         <div>
-          Goverment Id: {doctor.government_id}
+          Goverment Id: {doctor[0].government_id}
           {type === "admin" && (
             <input
               required
@@ -241,7 +239,7 @@ const PersonalDoctor = () => {
           )}
         </div>
         <div>
-          departmentId: {doctor.departmentId}
+          departmentId: {doctor[0].departmentId}
           {type === "admin" && (
             <TextField
               required
@@ -263,7 +261,7 @@ const PersonalDoctor = () => {
           )}
         </div>
         <div>
-          contactNumber: {doctor.contact_number}
+          contactNumber: {doctor[0].contact_number}
           {type === "admin" && (
             <input
               required
@@ -277,7 +275,7 @@ const PersonalDoctor = () => {
           )}
         </div>
         <div>
-          address: {doctor.address}
+          address: {doctor[0].address}
           {type === "admin" && (
             <input
               required
@@ -290,7 +288,7 @@ const PersonalDoctor = () => {
         </div>
         <div>
           specializationDetailsId:{" "}
-          {doctor.specializationDetailsId}
+          {doctor[0].specializationDetailsId}
           {type === "admin" && (
             <input
               required
@@ -306,7 +304,7 @@ const PersonalDoctor = () => {
           )}
         </div>
         <div>
-          experienceInYear: {doctor.experience_in_year}
+          experienceInYear: {doctor[0].experience_in_year}
           {type === "admin" && (
             <input
               required
@@ -320,7 +318,7 @@ const PersonalDoctor = () => {
           )}
         </div>
         <div>
-          category: {doctor.category}
+          category: {doctor[0].category}
           {type === "admin" && (
             <TextField
               id="outlined-select-currency"
@@ -342,7 +340,7 @@ const PersonalDoctor = () => {
           )}
         </div>
         <div>
-          degree: {doctor.degree}
+          degree: {doctor[0].degree}
           {type === "admin" && (
             <input
               required
@@ -354,7 +352,7 @@ const PersonalDoctor = () => {
           )}
         </div>
         <div>
-          rating: {doctor.rating}
+          rating: {doctor[0].rating}
           {type === "admin" && (
             <input
               required

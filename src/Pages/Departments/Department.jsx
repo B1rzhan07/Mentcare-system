@@ -9,6 +9,7 @@ import Card from "react-bootstrap/Card";
 import classes from "./Department.module.scss";
 import { height } from "@mui/system";
 import Footer from "../../Components/Footer/Footer";
+import axios from "../../api/axios";
 const photos = [
   "../../img/1.png",
   "../../img/2.png",
@@ -26,10 +27,13 @@ const photos = [
   "../../img/14.png",
 ];
 const Department = () => {
+  const [name, setName] = React.useState("");
+  const [price, setPrice] = React.useState("");
+  const [doctorId, setDoctorId] = React.useState("");
+  const [doctorPrice, setDoctorPrice] = React.useState("");
   const { departments } = useSelector(
     (state) => state.department
   );
-  const dispatch = useDispatch();
 
   const { id } = useParams();
   const department = departments.find(
@@ -42,9 +46,31 @@ const Department = () => {
     (service) => service.departmentId == id
   );
   const num = service.length;
-
-  const clickService = (name) => {
-    dispatch(setName(name));
+  const type = localStorage.getItem("type");
+  console.log(doctorId);
+  console.log(name);
+  console.log(price);
+  console.log(doctorPrice);
+  const addService = async () => {
+    const res = await axios.post(
+      "/services",
+      {
+        service_name: name,
+        price: price,
+        departmentId: id,
+        doctors: [{ id: doctorId, price: doctorPrice }],
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem(
+            "token"
+          )}`,
+        },
+      }
+    );
+    if (res) {
+      alert("Service added successfully");
+    }
   };
 
   return (
@@ -54,7 +80,7 @@ const Department = () => {
         <img
           className={classes.img}
           src={photos[id - 1]}
-          alt=""
+          alt="here"
         />
         <div className={classes.content}>
           <Card.Title>
@@ -67,7 +93,7 @@ const Department = () => {
           </Card.Text>
           <hr />
           <h4 className={classes.num}>
-            There are {num} Services
+            <b>There are {num} Services</b>
           </h4>
           <div className={classes.services}>
             {service.map((service) => (
@@ -80,8 +106,47 @@ const Department = () => {
               </div>
             ))}
           </div>
+          {type == "admin" ? (
+            <>
+              <div>admin</div>
+              Service Name:
+              <input
+                type="text"
+                value={name}
+                onChange={(e) =>
+                  setName(e.target.value)
+                }></input>
+              Service Price:
+              <input
+                type="text"
+                value={price}
+                onChange={(e) =>
+                  setPrice(e.target.value)
+                }></input>
+              Doctor ID:
+              <input
+                type="text"
+                value={doctorId}
+                onChange={(e) =>
+                  setDoctorId(e.target.value)
+                }></input>
+              Doctor's Price
+              <input
+                type="text"
+                value={doctorPrice}
+                onChange={(e) =>
+                  setDoctorPrice(e.target.value)
+                }></input>
+              <Button
+                variant="primary"
+                onClick={addService}>
+                Add Service
+              </Button>
+            </>
+          ) : null}
         </div>
       </div>
+
       <hr />
       <Footer />
     </>

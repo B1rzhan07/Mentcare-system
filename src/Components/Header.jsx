@@ -158,7 +158,7 @@ const Header = () => {
       <Drawer
         sx={{
           width: drawerWidth,
-          flexShrink: 0,
+          flexShrink: 1,
           "& .MuiDrawer-paper": {
             width: drawerWidth,
             boxSizing: "border-box",
@@ -177,20 +177,10 @@ const Header = () => {
         </DrawerHeader>
         <Divider />
         <List>
-          {/* {[
-            "Get Patients",
-            "Get Doctors",
-            "Register a Patient",
-            "Register a Doctor",
-          ].map((text, index) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton>
-                <ListItemText primary={text} />
-              </ListItemButton>
-            </ListItem>
-          ))} */}
-
-          <ListItem key={"get"} disablePadding>
+          <ListItem
+            key={"get"}
+            disablePadding
+            className={classes.listItem}>
             <ListItemButton>
               {localStorage.type === "admin" && (
                 <ListItemText
@@ -208,13 +198,27 @@ const Header = () => {
               )}
 
               {localStorage.type === "patient" && (
-                <ListItemText
-                  primary={"Personal Information"}
-                  onClick={() =>
-                    navigate(`/patient/${user.id}`)
-                  }
-                />
+                <>
+                  <ListItemText
+                    primary={"Personal Information"}
+                    onClick={() =>
+                      navigate(`/patient/${user.id}`)
+                    }
+                  />
+                </>
               )}
+            </ListItemButton>
+            <ListItemButton>
+              <ListItemText
+                primary={"Personal Messages"}
+                onClick={() => navigate("/messeges")}
+              />
+            </ListItemButton>
+            <ListItemButton>
+              <ListItemText
+                primary={"My history"}
+                onClick={() => navigate("/history")}
+              />
             </ListItemButton>
           </ListItem>
         </List>
