@@ -9,6 +9,7 @@ import { useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addServiceDoctor } from "../../Redux/Slices/serviceSlice";
 import { setSelectedTime } from "../../Redux/Slices/appointmentSlice";
+import { setIdDoctor } from "../../Redux/Slices/appointmentSlice";
 const ServiceSelect = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -26,6 +27,7 @@ const ServiceSelect = () => {
           .post(
             `/services/${id}/appointment/doctors`,
             {
+              id,
               time: timeService,
             },
             {
@@ -38,6 +40,7 @@ const ServiceSelect = () => {
           )
           .then((res) => {
             dispatch(addServiceDoctor(res.data));
+            dispatch(setIdDoctor(res.data[0].id));
           });
         // dispatch(addServiceDoctor(res));
       } catch (err) {

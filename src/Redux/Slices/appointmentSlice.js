@@ -5,6 +5,7 @@ const initialState = {
     selectedDate: '',
     selectedTime: '',
     selectedDoctor: '',
+    idDoctor: '',
 }
 
 
@@ -20,10 +21,13 @@ const appointmentSlice = createSlice({
         },
         setSelectedDoctor(state, action) {
             state.selectedDoctor = action.payload;
-        }
+        },
+        setIdDoctor(state, action) {
+            state.idDoctor = action.payload;
+        },
 
     },
 
 });
-export const { setSelectedDate, setSelectedTime, setSelectedDoctor } = appointmentSlice.actions;
+export const { setSelectedDate, setSelectedTime, setSelectedDoctor, setIdDoctor } = appointmentSlice.actions;
 export default appointmentSlice.reducer;

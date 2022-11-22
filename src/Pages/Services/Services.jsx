@@ -25,19 +25,21 @@ const Services = () => {
     (doctor) => doctor.departmentId == service.departmentId
   );
   const auth = localStorage.getItem("token");
-  // const { ServiceDoctor } = useSelector(
-  //   (state) => state.service
-  // );
+  const { patients } = useSelector((state) => state.user);
+  const { idDoctor } = useSelector(
+    (state) => state.appointment
+  );
+  console.log(patients[0].name);
 
   const makeAppointment = async () => {
     try {
       const res = await axios.post(
         `/services/${id}/appointment`,
         {
-          name,
-          surname,
+          name: patients[0].name,
+          surname: patients[0].surname,
           startDate: selectedTime,
-          doctorId: 2,
+          doctorId: idDoctor,
         },
         {
           headers: {
