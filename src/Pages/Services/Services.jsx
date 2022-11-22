@@ -8,9 +8,6 @@ import ServiceSelect from "../../assets/Service/ServiceSelect";
 import ServiceDoctor from "../../assets/Service/ServiceDoctor";
 import axios from "../../api/axios";
 const Services = () => {
-  const [name, setName] = React.useState("");
-  const [surname, setSurname] = React.useState("");
-
   const { selectedDate, selectedTime, selectedDoctor } =
     useSelector((state) => state.appointment);
   const { services } = useSelector(
@@ -29,7 +26,6 @@ const Services = () => {
   const { idDoctor } = useSelector(
     (state) => state.appointment
   );
-  console.log(patients[0].name);
 
   const makeAppointment = async () => {
     try {
@@ -73,25 +69,18 @@ const Services = () => {
         </div>
       ))}
 
-      <div>
-        <DataPicker id={id} />
-        <ServiceSelect />
-        <ServiceDoctor />
-        <input
-          type="text"
-          onChange={(e) => setName(e.target.value)}
-        />
-        <input
-          type="text"
-          onChange={(e) => setSurname(e.target.value)}
-        />
-      </div>
+      <div></div>
       {auth ? (
-        <Button
-          variant="contained"
-          onClick={makeAppointment}>
-          Make an Appointment
-        </Button>
+        <>
+          <DataPicker id={id} />
+          <ServiceSelect />
+          <ServiceDoctor />
+          <Button
+            variant="contained"
+            onClick={makeAppointment}>
+            Make an Appointment
+          </Button>
+        </>
       ) : (
         <div>Log in to make an appointment</div>
       )}

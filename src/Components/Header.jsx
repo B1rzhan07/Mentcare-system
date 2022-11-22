@@ -95,6 +95,7 @@ const Header = () => {
     localStorage.removeItem("type");
     window.location.reload();
     window.location.replace("/");
+    localStorage.clear();
   };
   const logged = localStorage.getItem("token");
   if (logged === "admin") {
