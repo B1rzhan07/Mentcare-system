@@ -1,38 +1,39 @@
 import React from "react";
-import classes from "./Search.module.scss";
 import { TextField } from "@mui/material";
 import Autocomplete from "@mui/material/Autocomplete";
 import { IconButton } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import axios from "../../api/axios";
 import { useSelector } from "react-redux";
-const Search = () => {
+const SearchDoctor = () => {
   const [value, setValue] = React.useState("");
   const [inputValue, setInputValue] = React.useState("");
   const [jsonData, setJsonData] = React.useState([]);
+  const [doctors, setDoctors] = React.useState([]);
+
   let a = 1;
   React.useEffect(() => {
-    const res = axios.get("/services").then((res) => {
+    const res = axios.get("/user/doctors").then((res) => {
       setJsonData(res.data);
     });
   }, [a]);
-  const { services } = useSelector(
-    (state) => state.service
+  const birka = jsonData.find(
+    (doctor) => doctor.name === inputValue
   );
-  const birka = services.find(
-    (service) => service.service_name === inputValue
-  );
+  console.log(jsonData);
   const birkaId = birka?.id;
+  console.log(birkaId);
+
   const searchNavigate = () => {
     a = 2;
-    for (let i = 0; i < services.length; i++) {
-      if (services[i].id == birkaId) {
-        window.location.href = `/services/${birkaId}`;
+    for (let i = 0; i < jsonData.length; i++) {
+      if (jsonData[i].id == birkaId) {
+        window.location.href = `/doctors/${birkaId}`;
       }
     }
   };
   return (
-    <div className={classes.search}>
+    <div>
       <Autocomplete
         value={value}
         onChange={(event, newValue) => {
@@ -44,12 +45,10 @@ const Search = () => {
         }}
         disablePortal
         id="controllable-states-demo"
-        options={jsonData.map(
-          (option) => option.service_name
-        )}
+        options={jsonData.map((option) => option.name)}
         sx={{ width: 300 }}
         renderInput={(params) => (
-          <TextField {...params} label="Services" />
+          <TextField {...params} label="Doctors" />
         )}
       />
       <IconButton type="submit" aria-label="search here">
@@ -62,16 +61,4 @@ const Search = () => {
   );
 };
 
-export default Search;
-
-const top100Films = [
-  // { name: "Birzhan Zhunubsekov" },
-  // { name: "Islam Yerzhanuly" },
-  { serviceName: "The Shawshank Redemption", year: 1994 },
-  { serviceName: "The Godfather", year: 1972 },
-  { serviceName: "The Godfather: Part II", year: 1974 },
-  { serviceName: "The Dark Knight", year: 2008 },
-  { serviceName: "12 Angry Men", year: 1957 },
-  { serviceName: "Schindler's List", year: 1993 },
-  { serviceName: "Pulp Fiction", year: 1994 },
-];
+export default SearchDoctor;

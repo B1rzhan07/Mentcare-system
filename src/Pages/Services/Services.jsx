@@ -44,6 +44,9 @@ const Services = () => {
         }
       );
       console.log(res);
+      if (res) {
+        alert("Appointment created successfully");
+      }
     } catch (err) {
       console.log(err);
     }

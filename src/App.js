@@ -8,6 +8,7 @@ import PersonalDoctor from "./Pages/Personal/PersonalDoctor/PersonalDoctor";
 import Department from "./Pages/Departments/Department";
 import Services from "./Pages/Services/Services";
 import Messenger from "./Pages/Messanger/Messenger";
+import DoctorId from "./Pages/Doctors/DoctorId";
 
 function App() {
   return (
@@ -46,6 +47,7 @@ function App() {
           element={<Services />}
         />{" "}
         <Route path="/messeges" element={<Messenger />} />{" "}
+        <Route path="/doctor" element={<DoctorId />} />{" "}
       </Routes>{" "}
     </div>
   );

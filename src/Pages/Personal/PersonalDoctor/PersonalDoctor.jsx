@@ -9,7 +9,6 @@ import { Link } from "react-router-dom";
 import { categories } from "../../../assets/Personal/personal";
 import classes from "./PersonalDoctor.module.scss";
 import Header from "../../../Components/Header";
-
 const PersonalDoctor = () => {
   const { id } = useParams();
   const { doctors } = useSelector((state) => state.user);
@@ -134,6 +133,7 @@ const PersonalDoctor = () => {
       console.log(error);
     }
   };
+  console.log(doctor[0].photo);
 
   return (
     <div>
@@ -141,7 +141,10 @@ const PersonalDoctor = () => {
       <div className={classes.wrapper}>
         <h1>Personal Doctor {doctor[0].name}</h1>
         <div>
-          <img src={doctor[0].photo} alt="here" />
+          <img
+            src={`http://localhost:8800/${doctor[0].photo}`}
+            alt="here"
+          />
           {type === "admin" && (
             <input
               type="file"

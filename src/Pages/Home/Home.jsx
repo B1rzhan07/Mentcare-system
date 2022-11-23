@@ -5,6 +5,7 @@ import Search from "../../Components/Search/Search";
 import classes from "./Home.module.scss";
 import Footer from "../../Components/Footer/Footer";
 import { useSelector } from "react-redux";
+import SearchDoctor from "../../Components/SearchDoctor/SearchDoctor";
 const Home = () => {
   const { departments } = useSelector(
     (state) => state.department
@@ -30,6 +31,7 @@ const Home = () => {
       <Header />
       <div className={classes.input}>
         <Search />
+        <SearchDoctor />
       </div>
       <hr />
       <div className={classes.card}>

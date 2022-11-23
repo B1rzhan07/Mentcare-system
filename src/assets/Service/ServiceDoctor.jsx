@@ -16,6 +16,7 @@ const ServiceDoctor = () => {
   const handleChange = (event) => {
     setDoctor(event.target.value);
   };
+
   dispatch(setSelectedDoctor(doctor));
   const x = serviceDoctor.length;
   return (
