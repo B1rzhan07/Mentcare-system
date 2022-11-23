@@ -11,6 +11,7 @@ export const fetchDepartments = createAsyncThunk(
 const initialState = {
     departments: [],
     name: '',
+    doctor: [],
 }
 
 
@@ -20,7 +21,11 @@ const departmentSlice = createSlice({
     reducers: {
         setName(state, action) {
             state.name = action.payload;
-        }
+        },
+        setDoctor(state, action) {
+            state.doctor = action.payload;
+        },
+
 
     },
 
@@ -31,6 +36,6 @@ const departmentSlice = createSlice({
     }
 
 });
-export const { setName } = departmentSlice.actions;
+export const { setName, setDoctor } = departmentSlice.actions;
 
 export default departmentSlice.reducer;

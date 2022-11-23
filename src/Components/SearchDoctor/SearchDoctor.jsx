@@ -1,16 +1,19 @@
 import React from "react";
+import classes from "./SearchDoctor.module.scss";
 import { TextField } from "@mui/material";
 import Autocomplete from "@mui/material/Autocomplete";
 import { IconButton } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import axios from "../../api/axios";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { setDoctor } from "../../Redux/Slices/departmentSlice";
 const SearchDoctor = () => {
   const [value, setValue] = React.useState("");
   const [inputValue, setInputValue] = React.useState("");
   const [jsonData, setJsonData] = React.useState([]);
   const [doctors, setDoctors] = React.useState([]);
-
+  const dispatch = useDispatch();
   let a = 1;
   React.useEffect(() => {
     const res = axios.get("/user/doctors").then((res) => {
@@ -21,19 +24,21 @@ const SearchDoctor = () => {
     (doctor) => doctor.name === inputValue
   );
   console.log(jsonData);
+
   const birkaId = birka?.id;
   console.log(birkaId);
-
+  console.log();
   const searchNavigate = () => {
     a = 2;
     for (let i = 0; i < jsonData.length; i++) {
       if (jsonData[i].id == birkaId) {
+        dispatch(setDoctor(jsonData[i]));
         window.location.href = `/doctors/${birkaId}`;
       }
     }
   };
   return (
-    <div>
+    <div className={classes.auto}>
       <Autocomplete
         value={value}
         onChange={(event, newValue) => {

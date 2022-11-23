@@ -47,7 +47,7 @@ function App() {
           element={<Services />}
         />{" "}
         <Route path="/messeges" element={<Messenger />} />{" "}
-        <Route path="/doctor" element={<DoctorId />} />{" "}
+        <Route path="/doctors/:id" element={<DoctorId />} />{" "}
       </Routes>{" "}
     </div>
   );

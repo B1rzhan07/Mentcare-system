@@ -17,18 +17,17 @@ const PersonalPatient = () => {
   const { id } = useParams();
   console.log(id);
   var patient = [];
-
+  console.log(patients);
   if (typeUser === "patient") {
     patient = patients;
   }
 
-  console.log(patients.id);
   if (typeUser === "admin") {
     patient = patients.filter(
       (patient) => patient.id == id
     );
   }
-  // }
+
   console.log(patient);
 
   const [bloodGroup, setBloodGroup] = React.useState(
