@@ -12,6 +12,7 @@ const initialState = {
     departments: [],
     name: '',
     doctor: [],
+
 }
 
 

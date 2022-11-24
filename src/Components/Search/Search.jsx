@@ -5,17 +5,29 @@ import Autocomplete from "@mui/material/Autocomplete";
 import { IconButton } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import axios from "../../api/axios";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { addInfoDoctor } from "../../Redux/Slices/serviceSlice";
+
 const Search = () => {
+  const dispatch = useDispatch();
   const [value, setValue] = React.useState("");
   const [inputValue, setInputValue] = React.useState("");
   const [jsonData, setJsonData] = React.useState([]);
+  const [data, setData] = React.useState([]);
+
   let a = 1;
   React.useEffect(() => {
     const res = axios.get("/services").then((res) => {
       setJsonData(res.data);
     });
   }, [a]);
+  React.useEffect(() => {
+    const res = axios.get("/user/doctors").then((res) => {
+      setData(res.data);
+      dispatch(addInfoDoctor(res.data));
+    });
+  }, []);
+
   const { services } = useSelector(
     (state) => state.service
   );

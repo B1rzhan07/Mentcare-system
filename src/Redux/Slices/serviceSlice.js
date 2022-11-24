@@ -12,6 +12,7 @@ const initialState = {
     services: [],
     time: [],
     serviceDoctor: [],
+    info_doctor: [],
 }
 
 
@@ -25,6 +26,9 @@ const serviceSlice = createSlice({
         addServiceDoctor: (state, action) => {
             state.serviceDoctor.push(action.payload)
         },
+        addInfoDoctor: (state, action) => {
+            state.info_doctor = action.payload
+        },
 
     },
 
@@ -36,6 +40,6 @@ const serviceSlice = createSlice({
     }
 
 });
-export const { addTime, addServiceDoctor } = serviceSlice.actions;
+export const { addTime, addServiceDoctor, addInfoDoctor } = serviceSlice.actions;
 
 export default serviceSlice.reducer;

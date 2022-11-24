@@ -13,6 +13,7 @@ const SearchDoctor = () => {
   const [inputValue, setInputValue] = React.useState("");
   const [jsonData, setJsonData] = React.useState([]);
   const [doctors, setDoctors] = React.useState([]);
+
   const dispatch = useDispatch();
   let a = 1;
   React.useEffect(() => {
@@ -20,6 +21,7 @@ const SearchDoctor = () => {
       setJsonData(res.data);
     });
   }, [a]);
+
   const birka = jsonData.find(
     (doctor) => doctor.name === inputValue
   );

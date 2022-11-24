@@ -31,6 +31,7 @@ const Department = () => {
   const [price, setPrice] = React.useState("");
   const [doctorId, setDoctorId] = React.useState("");
   const [doctorPrice, setDoctorPrice] = React.useState("");
+  const [duration, setDuration] = React.useState("");
   const { departments } = useSelector(
     (state) => state.department
   );
@@ -47,10 +48,7 @@ const Department = () => {
   );
   const num = service.length;
   const type = localStorage.getItem("type");
-  console.log(doctorId);
-  console.log(name);
-  console.log(price);
-  console.log(doctorPrice);
+
   const addService = async () => {
     const res = await axios.post(
       "/services",
@@ -59,6 +57,7 @@ const Department = () => {
         price: price,
         departmentId: id,
         doctors: [{ id: doctorId, price: doctorPrice }],
+        duration: duration,
       },
       {
         headers: {
@@ -136,6 +135,13 @@ const Department = () => {
                 value={doctorPrice}
                 onChange={(e) =>
                   setDoctorPrice(e.target.value)
+                }></input>
+              Duration:
+              <input
+                type="text"
+                value={duration}
+                onChange={(e) =>
+                  setDuration(e.target.value)
                 }></input>
               <Button
                 variant="primary"
