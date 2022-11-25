@@ -7,9 +7,10 @@ import TextField from "@mui/material/TextField";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
-export default function BasicDatePicker({ id }) {
+export default function BasicDatePicker({ id, clear }) {
   const dispatch = useDispatch();
   const [value, setValue] = React.useState("");
+
   React.useEffect(() => {
     const searchByDate = async () => {
       const { data: res } = await axios.post(
@@ -35,6 +36,9 @@ export default function BasicDatePicker({ id }) {
   const handleChange = (newValue) => {
     setValue(newValue);
   };
+  if (clear) {
+    setValue("");
+  }
 
   return (
     <>

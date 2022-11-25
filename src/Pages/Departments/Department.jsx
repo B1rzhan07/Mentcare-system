@@ -71,7 +71,7 @@ const Department = () => {
       alert("Service added successfully");
     }
   };
-
+  console.log(services);
   return (
     <>
       <Header />
@@ -90,21 +90,7 @@ const Department = () => {
           <Card.Text>
             {department.department_info}
           </Card.Text>
-          <hr />
-          <h4 className={classes.num}>
-            <b>There are {num} Services</b>
-          </h4>
-          <div className={classes.services}>
-            {service.map((service) => (
-              <div>
-                <Link to={`/services/${service.id}`}>
-                  <Button variant="primary">
-                    {service.service_name}
-                  </Button>
-                </Link>
-              </div>
-            ))}
-          </div>
+
           {type == "admin" ? (
             <>
               <div>admin</div>
@@ -152,8 +138,35 @@ const Department = () => {
           ) : null}
         </div>
       </div>
+      <hr />
+      <h4 className={classes.num}>
+        <b>There are {num} Services</b>
+      </h4>
+      <div className={classes.boot}>
+        {service.map((service) => (
+          <div className="card" style={{ width: "18rem" }}>
+            <div className="card-body ">
+              <h5 className="card-title">
+                {service.service_name}
+              </h5>
+              <h6 className="card-subtitle mb-2 text-muted">
+                Duration : {service.duration}
+              </h6>
+              <p className="card-text">
+                Price: {service.price}
+              </p>
+              <Link
+                className={classes.link}
+                to={`/services/${service.id}`}>
+                Make an appointment
+              </Link>
+            </div>
+          </div>
+        ))}
+      </div>
 
       <hr />
+
       <Footer />
     </>
   );

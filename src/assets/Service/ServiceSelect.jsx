@@ -10,7 +10,7 @@ import { useDispatch } from "react-redux";
 import { addServiceDoctor } from "../../Redux/Slices/serviceSlice";
 import { setSelectedTime } from "../../Redux/Slices/appointmentSlice";
 import { setIdDoctor } from "../../Redux/Slices/appointmentSlice";
-const ServiceSelect = () => {
+const ServiceSelect = ({ clear }) => {
   const dispatch = useDispatch();
   const { id } = useParams();
   const [timeService, setTimeService] = React.useState("");
@@ -49,6 +49,9 @@ const ServiceSelect = () => {
     };
     searchByDate();
   }, [timeService]);
+  if (clear) {
+    setTimeService("");
+  }
   return (
     <div>
       <FormControl

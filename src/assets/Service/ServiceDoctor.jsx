@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setSelectedDoctor } from "../../Redux/Slices/appointmentSlice";
-const ServiceDoctor = () => {
+const ServiceDoctor = ({ clear }) => {
   const dispatch = useDispatch();
   const { serviceDoctor } = useSelector(
     (state) => state.service
@@ -19,6 +19,9 @@ const ServiceDoctor = () => {
 
   dispatch(setSelectedDoctor(doctor));
   const x = serviceDoctor.length;
+  if (clear) {
+    setDoctor("");
+  }
   return (
     <div>
       <FormControl

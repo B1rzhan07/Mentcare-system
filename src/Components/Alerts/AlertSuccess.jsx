@@ -3,7 +3,7 @@ import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 const AlertSuccess = () => {
   return (
-    <div>
+    <div className="mb-20">
       <Alert severity="success">
         <AlertTitle>Success</AlertTitle>
         This is a success alert —{" "}

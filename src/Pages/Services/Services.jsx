@@ -10,7 +10,15 @@ import axios from "../../api/axios";
 import classes from "./Services.module.scss";
 import MessageIcon from "@mui/icons-material/Message";
 import { useNavigate } from "react-router-dom";
+import Card from "react-bootstrap/Card";
+import ListGroup from "react-bootstrap/ListGroup";
+import Footer from "../../Components/Footer/Footer";
+import AlertSuccess from "../../Components/Alerts/AlertSuccess";
+import Modal from "../../Components/Modal/Modal";
+import AlertFailure from "../../Components/Alerts/AlertFailure";
 const Services = () => {
+  const [clear, setClear] = React.useState(false);
+  const [alert, setAlert] = React.useState(null);
   const { info_doctor } = useSelector(
     (state) => state.service
   );
@@ -46,25 +54,30 @@ const Services = () => {
   }
 
   const makeAppointment = async () => {
-    try {
-      const res = await axios.post(
-        `/services/${id}/appointment`,
-        {
-          name: patients[0].name,
-          surname: patients[0].surname,
-          startDate: selectedTime,
-          doctorId: idDoctor,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${auth}`,
+    if (auth) {
+      try {
+        const res = await axios.post(
+          `/services/${id}/appointment`,
+          {
+            name: patients[0].name,
+            surname: patients[0].surname,
+            startDate: selectedTime,
+            doctorId: idDoctor,
           },
-        }
-      );
-    } catch (err) {
-      console.log(err);
+          {
+            headers: {
+              Authorization: `Bearer ${auth}`,
+            },
+          }
+        );
+        setAlert(true);
+      } catch (err) {
+        console.log(err);
+        setAlert(false);
+      }
+    } else {
+      return <Modal />;
     }
-    alert("Appointment created successfully");
   };
   let num = 0;
   for (let i = 0; i < availableDoctors.length; i++) {
@@ -79,71 +92,83 @@ const Services = () => {
     }
   }
   const navigate = useNavigate();
-  const handleNavigate = () => {
+  const handleNavigate = async (secondId) => {
     navigate("/messeges");
+    const res = await axios.post(
+      `/messanger/conversation`,
+      {
+        firstId: patients[0].userId,
+        secondId,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${auth}`,
+        },
+      }
+    );
   };
+  const failure = "Log in to make an appointment";
   return (
     <div className={classes.service}>
       <Header />
-      <div>
-        Service Name: <b>{service.service_name}</b>
-      </div>
-      <div>
-        price: <b>{service.price}</b>
-      </div>
-      <div>
-        Duration: <b>{service.duration} min.</b>
-      </div>
-      <h3>Available Doctors</h3>
-      <div className={classes.doctor}>
+      <h3>Doctor list</h3>
+
+      <div className={classes.card}>
         {availableDoctors.map((doctor) => (
-          <div className={classes.card}>
-            <img
-              className={classes.img}
-              src={`http://localhost:8800/${doctor.photo}`}
-              alt=""
-              style={{ width: "100px", height: "100px" }}
-            />
-            <h5>
-              {doctor.name} {doctor.surname}
-            </h5>
-            <p> rating:{doctor.rating}</p>
-            <p>Expereience:{doctor.experience_in_year}</p>
-            <p>Category:{doctor.category}</p>
-            <p>Degree:{doctor.degree}</p>
-            <p>
-              Price for <b>{service.service_name}</b> is:
-              {doctor.services[num].price}
-            </p>
-            <MessageIcon
-              onClick={() => {
-                handleNavigate();
-              }}
-            />
-          </div>
+          <Card
+            className="bg-info"
+            style={{ width: "20rem" }}>
+            <div className={classes.top}>
+              <Card.Img
+                variant="top"
+                className={classes.img}
+                src={`http://localhost:8800/${doctor.photo}`}
+              />
+            </div>
+            <Card.Body>
+              <Card.Title>
+                Doctor: {doctor.name} {doctor.surname}
+              </Card.Title>
+              <Card.Text>
+                <b>{service.service_name}</b> price is: $
+                {doctor.services[num].price}
+              </Card.Text>
+            </Card.Body>
+            <ListGroup className="list-group-flush">
+              <ListGroup.Item>
+                Rating: {doctor.rating}
+              </ListGroup.Item>
+              <ListGroup.Item>
+                Experience: {doctor.experience_in_year}
+              </ListGroup.Item>
+              <ListGroup.Item>
+                Category:{doctor.category}
+              </ListGroup.Item>
+              <ListGroup.Item>
+                Degree: {doctor.degree}
+              </ListGroup.Item>
+              <ListGroup.Item>
+                Category:{doctor.category}
+              </ListGroup.Item>
+            </ListGroup>
+          </Card>
         ))}
       </div>
-
-      {auth ? (
-        <>
-          <div className={classes.date}>
-            <DataPicker id={id} />
-            <ServiceSelect />
-            <ServiceDoctor />
-            <Button
-              variant="contained"
-              color="primary"
-              size="small"
-              onClick={makeAppointment}>
-              Make an Appointment
-            </Button>
-          </div>
-        </>
-      ) : (
-        <div className={classes.notLogged}>
-          Log in to make an appointment
-        </div>
-      )}
+      {alert && <AlertSuccess />}
+      {alert == false && <AlertFailure value={failure} />}
+      <div className={classes.date}>
+        <DataPicker id={id} clear={clear} />
+        <ServiceSelect clear={clear} />
+        <ServiceDoctor clear={clear} />
+        <Button
+          variant="contained"
+          color="primary"
+          size="small"
+          onClick={makeAppointment}>
+          Make an Appointment
+        </Button>
+      </div>
+      <Footer />
     </div>
   );
 };

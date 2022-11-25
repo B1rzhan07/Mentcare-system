@@ -10,7 +10,6 @@ import { categories } from "../../assets/Personal/personal";
 import { useSelector } from "react-redux";
 import AlertSuccess from "../../Components/Alerts/AlertSuccess";
 import AlertFailure from "../../Components/Alerts/AlertFailure";
-import MessageIcon from "@mui/icons-material/Message";
 const RegisterDoctor = () => {
   const [alert, setAlert] = React.useState(null);
   const [category, setCategory] = React.useState("");
@@ -148,7 +147,6 @@ const RegisterDoctor = () => {
             value={surname}
             onChange={(e) => setSurname(e.target.value)}
           />
-          <MessageIcon />
           <TextField
             required
             id="outlined-required"

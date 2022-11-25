@@ -1,35 +1,25 @@
 .card {
-    background-color: rgb(226, 238, 254);
-    margin-left: 20px;
-    border: 1px solid white;
-    padding: 20px;
-    width: 200px;
-    border-radius: 20px;
-    margin-right: 0px;
+    margin-left: 60px;
+    margin-top: 0px;
     display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    transition: box-shadow 0.1s ease-in-out;
     margin-bottom: 20px;
-    cursor: pointer;
-    p {
-        font-weight: 400;
-        font-size: 14px;
-    }
-    &:hover {
-        box-shadow: 0px 14px 30px;
-        transform: translateY(-5px);
-    }
+    margin-right: 60px;
+}
+
+.top {
+    padding: 20px;
 }
 
 .img {
-    border: 1px solid black;
+    border: 1px solid rgb(0, 0, 0);
     margin-bottom: 20px;
+    border-radius: 80%;
 }
 
 .date {
     display: flex;
     justify-content: space-around;
+    margin-bottom: 20px;
 }
 
 .btn {
@@ -44,6 +34,7 @@
 
 .service {
     h3 {
+        margin-top: 10px;
         display: flex;
         justify-content: center;
     }
