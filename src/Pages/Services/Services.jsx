@@ -1,13 +1,15 @@
 import React from "react";
 import Header from "../../Components/Header";
 import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import { Button } from "@mui/material";
 import DataPicker from "../../assets/Service/DataPicker";
 import ServiceSelect from "../../assets/Service/ServiceSelect";
 import ServiceDoctor from "../../assets/Service/ServiceDoctor";
 import axios from "../../api/axios";
 import classes from "./Services.module.scss";
+import MessageIcon from "@mui/icons-material/Message";
+import { useNavigate } from "react-router-dom";
 const Services = () => {
   const { info_doctor } = useSelector(
     (state) => state.service
@@ -76,6 +78,10 @@ const Services = () => {
       }
     }
   }
+  const navigate = useNavigate();
+  const handleNavigate = () => {
+    navigate("/messeges");
+  };
   return (
     <div className={classes.service}>
       <Header />
@@ -109,6 +115,11 @@ const Services = () => {
               Price for <b>{service.service_name}</b> is:
               {doctor.services[num].price}
             </p>
+            <MessageIcon
+              onClick={() => {
+                handleNavigate();
+              }}
+            />
           </div>
         ))}
       </div>

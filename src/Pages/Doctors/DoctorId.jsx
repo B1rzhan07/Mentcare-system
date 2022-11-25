@@ -23,6 +23,7 @@ const DoctorId = () => {
       <div className={classes.card}>
         <div className={classes.information}>
           <img
+            className={classes.img}
             src={`http://localhost:8800/${doctor.photo}`}
             alt="img"
             style={{ width: "300px", height: "300px" }}

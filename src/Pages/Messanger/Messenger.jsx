@@ -5,8 +5,9 @@ import Header from "../../Components/Header";
 import classes from "./Messenger.module.scss";
 import { useSelector } from "react-redux";
 const Messenger = ({ mine }) => {
-  const { patients } = useSelector((state) => state.user);
-  console.log(patients);
+  const [currentChat, setCurrentChat] =
+    React.useState(null);
+
   return (
     <>
       <Header />
@@ -19,36 +20,45 @@ const Messenger = ({ mine }) => {
               className={classes.chatSearchInput}
             />
             <Conversation />
-            <Conversation />
-            <Conversation />
-            <Conversation />
-            <Conversation />
           </div>
         </div>
         <div className={classes.chatBox}>
           <div className={classes.chatBoxWrapper}>
-            <div className={classes.chatBoxTop}>
-              <Chat />
-              <Chat mine={true} />
-              <Chat />
-              <Chat />
-              <Chat />
-              <Chat />
-              <Chat />
-            </div>
-            <div className={classes.chatBoxBottom}>
-              <textarea
-                placeholder="text here"
-                className={classes.textArea}></textarea>
-              <button className={classes.button}>
-                Send
-              </button>
-            </div>
+            {currentChat ? (
+              <>
+                <div className={classes.chatBoxTop}>
+                  <Chat />
+                  <Chat mine={true} />
+                  <Chat />
+                  <Chat />
+                  <Chat />
+                  <Chat />
+                  <Chat />
+                </div>
+                <div className={classes.chatBoxBottom}>
+                  <textarea
+                    placeholder="text here"
+                    className={classes.textArea}></textarea>
+                  <button className={classes.button}>
+                    Send
+                  </button>
+                </div>
+              </>
+            ) : (
+              <span className={classes.noConversationText}>
+                Open a conversation to start a chat
+              </span>
+            )}
           </div>
         </div>
         <div className={classes.chatOnline}>
           Online <b>Islam Yerzhanuly</b>
         </div>
+        <input
+          name="Name"
+          type="hidden"
+          value="Islam Yerzhanuly"
+        />
       </div>
     </>
   );

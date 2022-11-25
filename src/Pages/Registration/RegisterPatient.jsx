@@ -8,8 +8,10 @@ import axios from "axios";
 import MenuItem from "@mui/material/MenuItem";
 import { maritalStatuses } from "../../assets/Personal/personal";
 import { bloodGroups } from "../../assets/Personal/personal";
-
+import AlertSuccess from "../../Components/Alerts/AlertSuccess";
+import AlertFailure from "../../Components/Alerts/AlertFailure";
 const RegisterPatient = () => {
+  const [alert, setAlert] = React.useState(null);
   const [bloodGroup, setBloodGroup] = React.useState("");
   const handleChange1 = (event) => {
     setBloodGroup(event.target.value);
@@ -79,17 +81,18 @@ const RegisterPatient = () => {
       setIin("");
       setGovernmentId("");
       setDateOfBirth("");
-      if (response.status === 200) {
-        alert("Patient registered successfully!");
-      }
+      setAlert(true);
     } catch (error) {
       console.log(error);
+      setAlert(false);
     }
   };
 
   return (
     <div className={classes.main}>
       <Header />
+      {alert && <AlertSuccess />}
+      {alert == false && <AlertFailure />}
       <div className={classes.mainText}>
         <h1>Registering a Patient</h1>
       </div>

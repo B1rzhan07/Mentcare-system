@@ -8,7 +8,11 @@ import axios from "axios";
 import MenuItem from "@mui/material/MenuItem";
 import { categories } from "../../assets/Personal/personal";
 import { useSelector } from "react-redux";
+import AlertSuccess from "../../Components/Alerts/AlertSuccess";
+import AlertFailure from "../../Components/Alerts/AlertFailure";
+import MessageIcon from "@mui/icons-material/Message";
 const RegisterDoctor = () => {
+  const [alert, setAlert] = React.useState(null);
   const [category, setCategory] = React.useState("");
   const handleChange = (event) => {
     setCategory(event.target.value);
@@ -90,21 +94,21 @@ const RegisterDoctor = () => {
       setDegree("");
       setRating("");
       setFile(null);
-      if (response.status === 200) {
-        alert("Doctor registered successfully!");
-      }
+      setAlert(true);
     } catch (error) {
       console.log(error);
+      setAlert(false);
     }
   };
   const { departments } = useSelector(
     (state) => state.department
   );
-  console.log(departmentID);
 
   return (
     <div className={classes.main}>
       <Header />
+      {alert && <AlertSuccess />}
+      {alert == false && <AlertFailure />}
       <div className={classes.mainText}>
         <h1>Registering a Doctor</h1>
       </div>
@@ -144,6 +148,7 @@ const RegisterDoctor = () => {
             value={surname}
             onChange={(e) => setSurname(e.target.value)}
           />
+          <MessageIcon />
           <TextField
             required
             id="outlined-required"

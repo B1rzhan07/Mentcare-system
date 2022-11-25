@@ -13,11 +13,8 @@ import { maritalStatuses } from "../../../assets/Personal/personal";
 const PersonalPatient = () => {
   const typeUser = localStorage.getItem("type");
   const { patients } = useSelector((state) => state.user);
-  console.log(patients);
   const { id } = useParams();
-  console.log(id);
   var patient = [];
-  console.log(patients);
   if (typeUser === "patient") {
     patient = patients;
   }
@@ -27,8 +24,6 @@ const PersonalPatient = () => {
       (patient) => patient.id == id
     );
   }
-
-  console.log(patient);
 
   const [bloodGroup, setBloodGroup] = React.useState(
     `${patient[0].blood_group}`
@@ -101,7 +96,6 @@ const PersonalPatient = () => {
           },
         }
       );
-      console.log(response);
     } catch (e) {
       console.log(e);
     }
@@ -129,6 +123,7 @@ const PersonalPatient = () => {
   return (
     <>
       <Header />
+
       <div className={classes.wrapper}>
         <h1>
           Personal Information of {patient[0].name}

@@ -1,5 +1,6 @@
 import React from "react";
 import classes from "./Conversation.module.scss";
+import axios from "../../api/axios";
 const photos = [
   "../../img/1.png",
   "../../img/2.png",
@@ -17,6 +18,26 @@ const photos = [
   "../../img/14.png",
 ];
 const Conversation = () => {
+  let token = localStorage.getItem("token");
+  React.useEffect(() => {
+    const getConversations = async () => {
+      try {
+        const res = await axios.get(
+          "/messanger/conversation",
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem(
+                "token"
+              )}`,
+            },
+          }
+        );
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getConversations();
+  }, [token]);
   return (
     <div className={classes.conversation}>
       <img
