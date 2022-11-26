@@ -27,6 +27,7 @@ const Services = () => {
   const { services } = useSelector(
     (state) => state.service
   );
+  console.log(services);
   const { id } = useParams();
   const service = services.find(
     (service) => service.id == id
@@ -167,12 +168,19 @@ const Services = () => {
           onClick={makeAppointment}>
           Make an Appointment
         </Button>
+        <Button
+          variant="outlined"
+          onClick={() =>
+            navigate(`/department/${service.departmentId}`)
+          }>
+          Go back
+        </Button>
       </div>
       {modal && (
         <Modal
           active={modal}
           setActive={setModal}
-          text={"Login to Make appointment"}
+          text={"Login to Make Appointment"}
         />
       )}
       <Footer />
