@@ -1,7 +1,7 @@
 import React from "react";
 import Login from "../../Pages/Login";
 import classes from "./Modal.module.scss";
-const Modal = ({ active, setActive }) => {
+const Modal = ({ active, setActive, text }) => {
   return (
     <div
       className={classes.modal}
@@ -9,7 +9,7 @@ const Modal = ({ active, setActive }) => {
       <div
         className={classes.modal__content}
         onClick={(e) => e.stopPropagation()}>
-        <Login />
+        <Login text={text} />
       </div>
     </div>
   );

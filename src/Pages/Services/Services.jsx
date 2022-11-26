@@ -52,6 +52,7 @@ const Services = () => {
       }
     }
   }
+  const [modal, setModal] = React.useState(null);
 
   const makeAppointment = async () => {
     if (auth) {
@@ -76,7 +77,7 @@ const Services = () => {
         setAlert(false);
       }
     } else {
-      return <Modal />;
+      setModal(true);
     }
   };
   let num = 0;
@@ -112,7 +113,6 @@ const Services = () => {
     <div className={classes.service}>
       <Header />
       <h3>Doctor list</h3>
-
       <div className={classes.card}>
         {availableDoctors.map((doctor) => (
           <Card
@@ -168,6 +168,13 @@ const Services = () => {
           Make an Appointment
         </Button>
       </div>
+      {modal && (
+        <Modal
+          active={modal}
+          setActive={setModal}
+          text={"Login to Make appointment"}
+        />
+      )}
       <Footer />
     </div>
   );

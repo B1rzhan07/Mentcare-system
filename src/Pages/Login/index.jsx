@@ -15,7 +15,7 @@ import {
   setTypeof,
 } from "../../Redux/Slices/userSlice";
 
-const Login = () => {
+const Login = ({ text }) => {
   const [type, setType] = React.useState("");
   const users = ["admin", "patient", "doctor"];
   const dispatch = useDispatch();
@@ -71,7 +71,9 @@ const Login = () => {
   return (
     <>
       <div className={classes.login}>
-        <h1>Login to the Mentcare System</h1>
+        <h1>
+          {text ? text : "Login to the Mentcare System"}
+        </h1>
         <div>
           <FormControl
             variant="standard"
