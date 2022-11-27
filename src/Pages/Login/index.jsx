@@ -61,6 +61,7 @@ const Login = ({ text }) => {
   React.useEffect(() => {
     if (clicked) {
       handleClick();
+      setClicked(false);
     }
   }, [clicked]);
 
@@ -156,7 +157,6 @@ const Login = ({ text }) => {
               variant="contained"
               onClick={() => setClicked(true)}
               disabled={email.error || password.error}>
-              {" "}
               Log in
             </Button>
           </form>
