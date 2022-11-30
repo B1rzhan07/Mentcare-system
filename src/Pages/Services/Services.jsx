@@ -8,7 +8,6 @@ import ServiceSelect from "../../assets/Service/ServiceSelect";
 import ServiceDoctor from "../../assets/Service/ServiceDoctor";
 import axios from "../../api/axios";
 import classes from "./Services.module.scss";
-import MessageIcon from "@mui/icons-material/Message";
 import { useNavigate } from "react-router-dom";
 import Card from "react-bootstrap/Card";
 import ListGroup from "react-bootstrap/ListGroup";
@@ -27,7 +26,7 @@ const Services = () => {
   const { services } = useSelector(
     (state) => state.service
   );
-  console.log(services);
+
   const { id } = useParams();
   const service = services.find(
     (service) => service.id == id
@@ -81,6 +80,7 @@ const Services = () => {
       setModal(true);
     }
   };
+
   let num = 0;
   for (let i = 0; i < availableDoctors.length; i++) {
     for (
@@ -117,7 +117,7 @@ const Services = () => {
       <div className={classes.card}>
         {availableDoctors.map((doctor) => (
           <Card
-            className="bg-info"
+            className={classes.each}
             style={{ width: "20rem" }}>
             <div className={classes.top}>
               <Card.Img
@@ -132,7 +132,7 @@ const Services = () => {
               </Card.Title>
               <Card.Text>
                 <b>{service.service_name}</b> price is: $
-                {doctor.services[num].price}
+                {doctor.services[num].doctorService.price}
               </Card.Text>
             </Card.Body>
             <ListGroup className="list-group-flush">
@@ -176,13 +176,13 @@ const Services = () => {
           Go back
         </Button>
       </div>
-      {modal && (
+      {modal ? (
         <Modal
           active={modal}
           setActive={setModal}
           text={"Login to Make Appointment"}
         />
-      )}
+      ) : null}
       <Footer />
     </div>
   );

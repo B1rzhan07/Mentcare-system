@@ -10,6 +10,9 @@ import classes from "./Department.module.scss";
 import { height } from "@mui/system";
 import Footer from "../../Components/Footer/Footer";
 import axios from "../../api/axios";
+import MenuItem from "@mui/material/MenuItem";
+import TextField from "@mui/material/TextField";
+
 const photos = [
   "../../img/1.png",
   "../../img/2.png",
@@ -34,6 +37,9 @@ const Department = () => {
   const [duration, setDuration] = React.useState("");
   const { departments } = useSelector(
     (state) => state.department
+  );
+  const { info_doctor } = useSelector(
+    (state) => state.service
   );
 
   const { id } = useParams();
@@ -92,49 +98,58 @@ const Department = () => {
           </Card.Text>
 
           {type == "admin" ? (
-            <>
-              <div>admin</div>
-              Service Name:
-              <input
+            <h5 className={classes.admin}>
+              <div>Service Name:</div>
+              <TextField
                 type="text"
                 value={name}
                 onChange={(e) =>
                   setName(e.target.value)
-                }></input>
-              Service Price:
-              <input
+                }></TextField>
+              <div>Service Price: </div>
+              <TextField
                 type="text"
                 value={price}
                 onChange={(e) =>
                   setPrice(e.target.value)
-                }></input>
-              Doctor ID:
-              <input
-                type="text"
+                }></TextField>
+              <div>Select Doctor:</div>
+              <TextField
+                id="outlined-select-currency"
+                required
+                select
+                label="Doctor Name"
                 value={doctorId}
                 onChange={(e) =>
                   setDoctorId(e.target.value)
-                }></input>
-              Doctor's Price
-              <input
+                }>
+                {info_doctor.map((option, index) => (
+                  <MenuItem key={index} value={option.id}>
+                    {option.name}
+                  </MenuItem>
+                ))}
+              </TextField>
+              <div>Doctor's Price</div>
+              <TextField
                 type="text"
                 value={doctorPrice}
                 onChange={(e) =>
                   setDoctorPrice(e.target.value)
-                }></input>
-              Duration:
-              <input
+                }></TextField>
+              <div>Duration: </div>
+              <TextField
                 type="text"
                 value={duration}
                 onChange={(e) =>
                   setDuration(e.target.value)
-                }></input>
+                }></TextField>
               <Button
+                className={classes.button}
                 variant="primary"
                 onClick={addService}>
                 Add Service
               </Button>
-            </>
+            </h5>
           ) : null}
         </div>
       </div>

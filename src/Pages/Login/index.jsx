@@ -32,7 +32,6 @@ const Login = ({ text }) => {
   });
 
   const handleClick = async () => {
-    console.log("button clicked");
     try {
       const response = await AuthService.login(
         email.value,

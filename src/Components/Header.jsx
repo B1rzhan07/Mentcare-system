@@ -25,6 +25,7 @@ import {
   setDataDoctors,
   fetchUsers,
 } from "../Redux/Slices/userSlice";
+import { setAppointments } from "../Redux/Slices/appointmentSlice";
 import { fetchDepartments } from "../Redux/Slices/departmentSlice";
 import axios from "../api/axios";
 import {
@@ -44,9 +45,48 @@ const Header = () => {
     dispatch(fetchDepartments());
     dispatch(fetchServices());
   }, []);
+  const [user, setUser] = React.useState(null);
 
   const typeUser = localStorage.getItem("type");
-  const [user, setUser] = React.useState();
+
+  React.useEffect(() => {
+    if (typeUser === "patient") {
+      try {
+        axios
+          .get("/myPage/patient/appointment", {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem(
+                "token"
+              )}`,
+            },
+          })
+          .then((res) => {
+            dispatch(setAppointments(res.data));
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }, [typeUser]);
+  React.useEffect(() => {
+    if (typeUser === "doctor") {
+      try {
+        axios
+          .get("/myPage/doctor/appointment", {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem(
+                "token"
+              )}`,
+            },
+          })
+          .then((res) => {
+            dispatch(setAppointments(res.data));
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }, [typeUser]);
 
   React.useEffect(() => {
     try {
@@ -100,7 +140,6 @@ const Header = () => {
   const logged = localStorage.getItem("token");
   if (logged === "admin") {
     fetchUsers();
-    console.log("admin");
   }
 
   return (
@@ -203,7 +242,7 @@ const Header = () => {
                   <ListItemText
                     primary={"Personal Information"}
                     onClick={() =>
-                      navigate(`/patient/${user.id}`)
+                      navigate(`/patient/${user[0].id}`)
                     }
                   />
                 </>
@@ -216,10 +255,18 @@ const Header = () => {
               />
             </ListItemButton>
             <ListItemButton>
-              <ListItemText
-                primary={"My history"}
-                onClick={() => navigate("/history")}
-              />
+              {localStorage.type === "patient" && (
+                <ListItemText
+                  primary={"My Appointments"}
+                  onClick={() => navigate("/history")}
+                />
+              )}
+              {localStorage.type === "doctor" && (
+                <ListItemText
+                  primary={"My Appointments"}
+                  onClick={() => navigate("/appoinments")}
+                />
+              )}
             </ListItemButton>
           </ListItem>
         </List>

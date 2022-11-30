@@ -15,6 +15,21 @@ const ServiceSelect = ({ clear }) => {
   const { id } = useParams();
   const [timeService, setTimeService] = React.useState("");
   const { time } = useSelector((state) => state.service);
+  console.log("time", time);
+  const times = {
+    startHours: [],
+    startMinutes: [],
+  };
+  for (let i = 0; i < time.length; i++) {
+    console.log(time[i]);
+    let sh = new Date(time[i]);
+    times.startHours.push(sh.getUTCHours());
+    times.startMinutes.push(sh.getUTCMinutes());
+  }
+  console.log("times", times);
+  let xx = new Date("2022-12-11T02:00:00.000Z");
+  console.log("xx", xx.getUTCHours());
+
   const handleChange = (event) => {
     setTimeService(event.target.value);
   };

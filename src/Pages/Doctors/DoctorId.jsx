@@ -32,17 +32,20 @@ const DoctorId = () => {
             <h2>
               {doctor.name} {doctor.surname}
             </h2>
-            <h3>{department}</h3>
-            <div>{doctor.category}</div>
-            <div>{doctor.rating}</div>
-            <div>{doctor.experience_in_year}</div>
-            <div>{doctor.degree}</div>
+            <h3>Department: {department}</h3>
+            <div> Category: {doctor.category}</div>
+            <div>Rating: {doctor.rating}</div>
+            <div>
+              Experience: {doctor.experience_in_year}
+            </div>
+            <div>Degree: {doctor.degree}</div>
           </div>
         </div>
         {doctor.services.map((service) => (
           <div>
-            {service.service_name} {service.price}{" "}
-            {service.duration}
+            Service Name: {service.service_name} Price: $
+            {service.price} Duration: {service.duration}{" "}
+            minutes
           </div>
         ))}
       </div>

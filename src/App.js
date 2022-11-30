@@ -9,6 +9,8 @@ import Department from "./Pages/Departments/Department";
 import Services from "./Pages/Services/Services";
 import Messenger from "./Pages/Messanger/Messenger";
 import DoctorId from "./Pages/Doctors/DoctorId";
+import History from "./Pages/History/History";
+import HistoryDoctor from "./Pages/History/HistoryDoctor";
 
 function App() {
   return (
@@ -48,6 +50,11 @@ function App() {
         />{" "}
         <Route path="/messeges" element={<Messenger />} />{" "}
         <Route path="/doctors/:id" element={<DoctorId />} />{" "}
+        <Route path="/history" element={<History />} />{" "}
+        <Route
+          path="/appoinments"
+          element={<HistoryDoctor />}
+        />{" "}
       </Routes>{" "}
     </div>
   );

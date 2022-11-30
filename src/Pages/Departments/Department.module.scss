@@ -48,3 +48,17 @@
         text-decoration: none;
     }
 }
+
+.admin {
+    display: flex;
+    flex-direction: column;
+    div {
+        margin-bottom: 10px;
+    }
+}
+
+.button {
+    margin-top: 20px;
+    margin-left: 100px;
+    margin-right: 100px;
+}

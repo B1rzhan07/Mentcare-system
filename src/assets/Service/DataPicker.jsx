@@ -7,16 +7,19 @@ import TextField from "@mui/material/TextField";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
+
+import "react-datepicker/dist/react-datepicker.css";
 export default function BasicDatePicker({ id, clear }) {
   const dispatch = useDispatch();
-  const [value, setValue] = React.useState("");
+  const [value, setValue] = React.useState(new Date());
 
   React.useEffect(() => {
     const searchByDate = async () => {
+      console.log(value);
       const { data: res } = await axios.post(
         `/services/${id}/appointment/Slots`,
         {
-          date: value,
+          date: value.$d,
         },
         {
           headers: {
@@ -28,6 +31,7 @@ export default function BasicDatePicker({ id, clear }) {
       );
 
       dispatch(addTime(res));
+      console.log("what it is", res);
       return res;
     };
     searchByDate();
