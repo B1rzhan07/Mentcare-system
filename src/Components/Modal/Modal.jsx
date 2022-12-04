@@ -9,7 +9,7 @@ const Modal = ({ active, setActive, text }) => {
       <div
         className={classes.modal__content}
         onClick={(e) => e.stopPropagation()}>
-        <Login text={text} />
+        <Login text={text} setActive={setActive} />
       </div>
     </div>
   );

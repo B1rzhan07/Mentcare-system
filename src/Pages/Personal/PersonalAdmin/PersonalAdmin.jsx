@@ -1,6 +1,5 @@
 import React from "react";
 import axios from "../../../api/axios";
-import Header from "../../../Components/Header";
 import { Button } from "@mui/material";
 import classes from "./PersonalAdmin.module.scss";
 import { Link } from "react-router-dom";
@@ -10,6 +9,7 @@ import {
   setDataPatients,
   setDataDoctors,
 } from "../../../Redux/Slices/userSlice";
+import Header from "../../../Components/Header/Header";
 
 const PersonalAdmin = () => {
   const dispatch = useDispatch();

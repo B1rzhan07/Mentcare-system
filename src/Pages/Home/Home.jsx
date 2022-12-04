@@ -1,11 +1,15 @@
 import React from "react";
-import Header from "../../Components/Header";
+
 import Card from "../../Components/Card/Card";
 import Search from "../../Components/Search/Search";
 import classes from "./Home.module.scss";
 import Footer from "../../Components/Footer/Footer";
 import { useSelector } from "react-redux";
 import SearchDoctor from "../../Components/SearchDoctor/SearchDoctor";
+import Box from "@mui/material/Box";
+import Pagination from "@mui/material/Pagination";
+import Header from "../../Components/Header/Header";
+const pageSize = 6;
 const Home = () => {
   const { departments } = useSelector(
     (state) => state.department
@@ -45,6 +49,13 @@ const Home = () => {
         ))}
       </div>
       <hr />
+      <Box
+        justifyContent={"center"}
+        alignContent={"center"}
+        display={"flex"}
+        sx={{ margin: "20px 0px" }}>
+        <Pagination count={2} color="primary" />
+      </Box>
       <Footer />
     </>
   );

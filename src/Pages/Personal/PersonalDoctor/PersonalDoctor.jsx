@@ -8,10 +8,10 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { categories } from "../../../assets/Personal/personal";
 import classes from "./PersonalDoctor.module.scss";
-import Header from "../../../Components/Header";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Form from "react-bootstrap/Form";
 import { datePickerValueManager } from "@mui/x-date-pickers/DatePicker/shared";
+import Header from "../../../Components/Header/Header";
 const PersonalDoctor = () => {
   const { id } = useParams();
   const { doctors } = useSelector((state) => state.user);

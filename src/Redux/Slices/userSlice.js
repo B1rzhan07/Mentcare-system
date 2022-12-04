@@ -22,6 +22,7 @@ const initialState = {
     button: false,
     patients: [],
     doctors: [],
+
 }
 
 
@@ -48,6 +49,7 @@ const userSlice = createSlice({
         setDataDoctors(state, action) {
             state.doctors = action.payload;
         },
+
     },
     extraReducers: {
         [fetchUsers.fulfilled]: (state, action) => {

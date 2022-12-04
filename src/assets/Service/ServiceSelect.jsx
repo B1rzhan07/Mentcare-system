@@ -16,19 +16,13 @@ const ServiceSelect = ({ clear }) => {
   const [timeService, setTimeService] = React.useState("");
   const { time } = useSelector((state) => state.service);
   console.log("time", time);
-  const times = {
-    startHours: [],
-    startMinutes: [],
-  };
+  let startHours = [];
+  let startMinutes = [];
   for (let i = 0; i < time.length; i++) {
-    console.log(time[i]);
     let sh = new Date(time[i]);
-    times.startHours.push(sh.getUTCHours());
-    times.startMinutes.push(sh.getUTCMinutes());
+    startHours.push(sh.getUTCHours());
+    startMinutes.push(sh.getUTCMinutes());
   }
-  console.log("times", times);
-  let xx = new Date("2022-12-11T02:00:00.000Z");
-  console.log("xx", xx.getUTCHours());
 
   const handleChange = (event) => {
     setTimeService(event.target.value);
@@ -79,22 +73,16 @@ const ServiceSelect = ({ clear }) => {
           value={timeService}
           label="Time"
           onChange={handleChange}>
-          {time[x - 1]?.map((time) => (
+          {time[x - 1]?.map((time, index) => (
             <MenuItem key={time} value={time}>
-              {time}
+              {new Date(time).getUTCHours() + 7}:
+              {new Date(time).getUTCMinutes() == 0
+                ? "00"
+                : new Date(time).getUTCMinutes()}
             </MenuItem>
           ))}
         </Select>
       </FormControl>
-      {/* <label>Choose time slot:</label>
-
-      <select name="time" onChange={handleChange}>
-        {time?.map((times, i) => (
-          <option key={i} value={times}>
-            {times[i]}
-          </option>
-        ))}
-      </select> */}
     </div>
   );
 };

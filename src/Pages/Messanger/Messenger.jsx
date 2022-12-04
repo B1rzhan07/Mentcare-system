@@ -1,10 +1,10 @@
 import React from "react";
 import Chat from "../../Components/Chat/Chat";
 import Conversation from "../../Components/Conversation/Conversation";
-import Header from "../../Components/Header";
 import classes from "./Messenger.module.scss";
 import { useSelector } from "react-redux";
 import axios from "../../api/axios";
+import Header from "../../Components/Header/Header";
 const Messenger = () => {
   const token = localStorage.getItem("token");
 
@@ -37,19 +37,17 @@ const Messenger = () => {
   const { info_doctor } = useSelector(
     (state) => state.service
   );
+  const { patients } = useSelector((state) => state.user);
 
   React.useEffect(() => {
     try {
-      const res = axios.get(
-        `/messanger/conversation/${9}`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem(
-              "token"
-            )}`,
-          },
-        }
-      );
+      const res = axios.get(`/messanger/conversation`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem(
+            "token"
+          )}`,
+        },
+      });
       console.log(res);
     } catch (err) {
       console.log(err);
@@ -72,7 +70,6 @@ const Messenger = () => {
       }
     }
   }
-  console.log(people);
 
   return (
     <>
@@ -86,7 +83,9 @@ const Messenger = () => {
               className={classes.chatSearchInput}
             />
             {people.name.map((name, index) => (
-              <div key={index}>
+              <div
+                key={index}
+                onClick={() => setCurrentChat(true)}>
                 <Conversation
                   name={name}
                   surname={people.surname[index]}

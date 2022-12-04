@@ -2,7 +2,6 @@ import React from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import classes from "./RegisterPatient.module.scss";
-import Header from "../../Components/Header";
 import { Button } from "@mui/material";
 import axios from "axios";
 import MenuItem from "@mui/material/MenuItem";
@@ -10,6 +9,7 @@ import { maritalStatuses } from "../../assets/Personal/personal";
 import { bloodGroups } from "../../assets/Personal/personal";
 import AlertSuccess from "../../Components/Alerts/AlertSuccess";
 import AlertFailure from "../../Components/Alerts/AlertFailure";
+import Header from "../../Components/Header/Header";
 const RegisterPatient = () => {
   const [alert, setAlert] = React.useState(null);
   const [bloodGroup, setBloodGroup] = React.useState("");

@@ -1,7 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import Header from "../../Components/Header";
 import { Link } from "react-router-dom";
 import { setName } from "../../Redux/Slices/departmentSlice";
 import Button from "react-bootstrap/Button";
@@ -12,6 +11,8 @@ import Footer from "../../Components/Footer/Footer";
 import axios from "../../api/axios";
 import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
+import DeleteIcon from "@mui/icons-material/Delete";
+import Header from "../../Components/Header/Header";
 
 const photos = [
   "../../img/1.png",
@@ -78,6 +79,22 @@ const Department = () => {
     }
   };
   console.log(services);
+  const deleteService = async (id) => {
+    try {
+      const response = await axios.delete(
+        `/services/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem(
+              "token"
+            )}`,
+          },
+        }
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <>
       <Header />
@@ -175,6 +192,16 @@ const Department = () => {
                 to={`/services/${service.id}`}>
                 Make an appointment
               </Link>
+              {localStorage.getItem("type") == "admin" && (
+                <div>
+                  Delete the Service:{" "}
+                  <DeleteIcon
+                    onClick={() =>
+                      deleteService(service.id)
+                    }
+                  />
+                </div>
+              )}
             </div>
           </div>
         ))}

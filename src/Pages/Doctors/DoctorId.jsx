@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import classes from "./DoctorId.module.scss";
-import Header from "../../Components/Header";
 import axios from "../../api/axios";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
+import Header from "../../Components/Header/Header";
 
 const DoctorId = () => {
   const { departments } = useSelector(

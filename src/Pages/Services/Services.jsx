@@ -1,5 +1,4 @@
 import React from "react";
-import Header from "../../Components/Header";
 import { useSelector } from "react-redux";
 import { Navigate, useParams } from "react-router-dom";
 import { Button } from "@mui/material";
@@ -15,6 +14,7 @@ import Footer from "../../Components/Footer/Footer";
 import AlertSuccess from "../../Components/Alerts/AlertSuccess";
 import Modal from "../../Components/Modal/Modal";
 import AlertFailure from "../../Components/Alerts/AlertFailure";
+import Header from "../../Components/Header/Header";
 const Services = () => {
   const [clear, setClear] = React.useState(false);
   const [alert, setAlert] = React.useState(null);
@@ -143,13 +143,10 @@ const Services = () => {
                 Experience: {doctor.experience_in_year}
               </ListGroup.Item>
               <ListGroup.Item>
-                Category:{doctor.category}
+                Category: {doctor.category}
               </ListGroup.Item>
               <ListGroup.Item>
                 Degree: {doctor.degree}
-              </ListGroup.Item>
-              <ListGroup.Item>
-                Category:{doctor.category}
               </ListGroup.Item>
             </ListGroup>
           </Card>
@@ -183,7 +180,6 @@ const Services = () => {
           text={"Login to Make Appointment"}
         />
       ) : null}
-      <Footer />
     </div>
   );
 };

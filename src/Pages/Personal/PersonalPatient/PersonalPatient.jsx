@@ -6,10 +6,10 @@ import axios from "axios";
 import { MenuItem } from "@mui/material";
 import { Link } from "react-router-dom";
 import classes from "./PersonalPatient.module.scss";
-import Header from "../../../Components/Header";
 import { bloodGroups } from "../../../assets/Personal/personal";
 import { maritalStatuses } from "../../../assets/Personal/personal";
 import Form from "react-bootstrap/Form";
+import Header from "../../../Components/Header/Header";
 
 const PersonalPatient = () => {
   const type = localStorage.getItem("type");
@@ -21,7 +21,9 @@ const PersonalPatient = () => {
   }
 
   if (type === "admin") {
-    patient = patients.filter((patient) => patient.id == id);
+    patient = patients.filter(
+      (patient) => patient.id == id
+    );
   }
 
   const [bloodGroup, setBloodGroup] = React.useState(
@@ -37,14 +39,19 @@ const PersonalPatient = () => {
     setMaritalStatus(event.target.value);
   };
 
-  const [name, setName] = React.useState(`${patient[0].name}`);
-  const [surname, setSurname] = React.useState(`${patient[0].surname}`);
+  const [name, setName] = React.useState(
+    `${patient[0].name}`
+  );
+  const [surname, setSurname] = React.useState(
+    `${patient[0].surname}`
+  );
   const [middleName, setMiddleName] = React.useState(
     `${patient[0].middle_name}`
   );
-  const [emergencyContactNumber, setEmergencyContact] = React.useState(
-    `${patient[0].emergency_contact_number}`
-  );
+  const [emergencyContactNumber, setEmergencyContact] =
+    React.useState(
+      `${patient[0].emergency_contact_number}`
+    );
   const [contactNumber, setContactNumber] = React.useState(
     `${patient[0].contact_number}`
   );
@@ -55,11 +62,14 @@ const PersonalPatient = () => {
   const [dateOfBirth, setDateOfBirth] = React.useState(
     `${patient[0].date_of_birth}`
   );
-  const [address, setAddress] = React.useState(`${patient[0].address}`);
-  const [email, setEmail] = React.useState(`${patient[0].email}`);
-  const [optionalDetails, setOptionalDetails] = React.useState(
-    `${patient[0].optional_details}`
+  const [address, setAddress] = React.useState(
+    `${patient[0].address}`
   );
+  const [email, setEmail] = React.useState(
+    `${patient[0].email}`
+  );
+  const [optionalDetails, setOptionalDetails] =
+    React.useState(`${patient[0].optional_details}`);
   const modifyPatient = async () => {
     try {
       const response = await axios.patch(
@@ -81,7 +91,9 @@ const PersonalPatient = () => {
         },
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            Authorization: `Bearer ${localStorage.getItem(
+              "token"
+            )}`,
           },
         }
       );
@@ -95,7 +107,9 @@ const PersonalPatient = () => {
         `http://localhost:8800/api/myPage/admin/user/${patient[0].userId}`,
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            Authorization: `Bearer ${localStorage.getItem(
+              "token"
+            )}`,
           },
         }
       );
@@ -115,12 +129,14 @@ const PersonalPatient = () => {
           type === "admin"
             ? "container rounded bg-white mt-5 mb-5"
             : "container rounded bg-white mt-5 mb-5 d-flex justify-content-center"
-        }
-      >
+        }>
         <div className="row">
           <div
-            className={type === "admin" ? "col-md-3 border-end" : "col-md-12"}
-          >
+            className={
+              type === "admin"
+                ? "col-md-3 border-end"
+                : "col-md-12"
+            }>
             <div className="d-flex flex-column align-items-center text-center p-3 py-4">
               <img
                 className="rounded-circle mt-5"
@@ -128,21 +144,37 @@ const PersonalPatient = () => {
                 src={`https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png`}
               />
               <span className="font-weight-bold mt-3">
-                {patient[0].name} {patient[0].surname} {patient[0].middle_name}
+                {patient[0].name} {patient[0].surname}{" "}
+                {patient[0].middle_name}
               </span>
-              <span className="text-black-50">{patient[0].email}</span>
-              <span className="text-black-50 ">IIN: {iin}</span>
+              <span className="text-black-50">
+                {patient[0].email}
+              </span>
+              <span className="text-black-50 ">
+                IIN: {iin}
+              </span>
               <span className="text-black-50">
                 Government ID: {governmentId}
               </span>
               <span className="text-black-50">
                 Contact Number: {contactNumber}
               </span>
-              <span className="text-black-50 ">Emergency Contact Number: {emergencyContactNumber}</span>
-              <span className="text-black-50">Address: {address}</span>
-              <span className="text-black-50 ">Blood Group: {bloodGroup}</span>
-              <span className="text-black-50 ">Marital Status: {maritalStatus}</span>
-              <span className="text-black-50 ">Optional Details: {optionalDetails}</span>
+              <span className="text-black-50 ">
+                Emergency Contact Number:{" "}
+                {emergencyContactNumber}
+              </span>
+              <span className="text-black-50">
+                Address: {address}
+              </span>
+              <span className="text-black-50 ">
+                Blood Group: {bloodGroup}
+              </span>
+              <span className="text-black-50 ">
+                Marital Status: {maritalStatus}
+              </span>
+              <span className="text-black-50 ">
+                Optional Details: {optionalDetails}
+              </span>
             </div>
           </div>
           {type === "admin" && (
@@ -150,7 +182,9 @@ const PersonalPatient = () => {
               <div className="col-md-5 border-end">
                 <div className="p-3 py-5">
                   <div className="d-flex justify-content-between align-items-center mb-2">
-                    <h4 className="text-right">Profile Settings</h4>
+                    <h4 className="text-right">
+                      Profile Settings
+                    </h4>
                   </div>
                   <div className="row mt-2">
                     <div className="col-md-4">
@@ -161,41 +195,55 @@ const PersonalPatient = () => {
                         id="outlined-required"
                         label="First Name"
                         value={name}
-                        onChange={(e) => setName(e.target.value)}
+                        onChange={(e) =>
+                          setName(e.target.value)
+                        }
                       />
                     </div>
                     <div className="col-md-4">
-                      <label className="labels">Surname</label>
+                      <label className="labels">
+                        Surname
+                      </label>
                       <input
                         className="form-control"
                         required
                         id="outlined-required"
                         label="Surname"
                         value={surname}
-                        onChange={(e) => setSurname(e.target.value)}
+                        onChange={(e) =>
+                          setSurname(e.target.value)
+                        }
                       />
                     </div>
                     <div className="col-md-4">
-                      <label className="labels">Middle Name</label>
+                      <label className="labels">
+                        Middle Name
+                      </label>
                       <input
                         className="form-control"
                         required
                         id="outlined-required"
                         label="Middle Name"
                         value={middleName}
-                        onChange={(e) => setMiddleName(e.target.value)}
+                        onChange={(e) =>
+                          setMiddleName(e.target.value)
+                        }
                       />
                     </div>
                   </div>
                   <div className="row mt-3">
                     <div className="col-md-12">
-                      <label className="labels">Email</label>
+                      <label className="labels">
+                        Email
+                      </label>
                       <input
                         className="form-control"
                         id="outlined"
                         label="E-mail"
                         value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        onChange={(e) =>
+                          setEmail(e.target.value)
+                        }
                       />
                     </div>
                     <div className="col-md-6">
@@ -206,33 +254,45 @@ const PersonalPatient = () => {
                         id="outlined-required"
                         label="IIN Number"
                         value={iin}
-                        onChange={(e) => setIin(e.target.value)}
+                        onChange={(e) =>
+                          setIin(e.target.value)
+                        }
                       />
                     </div>
                     <div className="col-md-6">
-                      <label className="labels">Date of Birth</label>
+                      <label className="labels">
+                        Date of Birth
+                      </label>
                       <input
                         className="form-control"
                         required
                         type="date"
                         id="outlined-required"
                         value={dateOfBirth}
-                        onChange={(e) => setDateOfBirth(e.target.value)}
+                        onChange={(e) =>
+                          setDateOfBirth(e.target.value)
+                        }
                       />
                     </div>
                     <div className="col-md-6">
-                      <label className="labels">Government ID</label>
+                      <label className="labels">
+                        Government ID
+                      </label>
                       <input
                         className="form-control"
                         required
                         id="outlined-required"
                         label="ID Number"
                         value={governmentId}
-                        onChange={(e) => setGovernmentId(e.target.value)}
+                        onChange={(e) =>
+                          setGovernmentId(e.target.value)
+                        }
                       />
                     </div>
                     <div className="col-md-6">
-                      <label className="labels">Blood Group</label>
+                      <label className="labels">
+                        Blood Group
+                      </label>
                       <TextField
                         className="form-control"
                         id="outlined-select-currency"
@@ -240,63 +300,81 @@ const PersonalPatient = () => {
                         select
                         size="small"
                         value={bloodGroup}
-                        onChange={handleChange1}
-                      >
+                        onChange={handleChange1}>
                         {bloodGroups.map((option) => (
-                          <MenuItem key={option.value} value={option.value}>
+                          <MenuItem
+                            key={option.value}
+                            value={option.value}>
                             {option.label}
                           </MenuItem>
                         ))}
                       </TextField>
                     </div>
                     <div className="col-md-6 mt-1">
-                      <label className="labels">MaritalStatus</label>
+                      <label className="labels">
+                        MaritalStatus
+                      </label>
                       <TextField
                         className="form-control"
                         id="outlined-select-currency"
                         required
                         select
                         value={maritalStatus}
-                        onChange={handleChange2}
-                      >
+                        onChange={handleChange2}>
                         {maritalStatuses.map((option) => (
-                          <MenuItem key={option.value} value={option.value}>
+                          <MenuItem
+                            key={option.value}
+                            value={option.value}>
                             {option.label}
                           </MenuItem>
                         ))}
                       </TextField>
                     </div>
                     <div className="col-md-6 mt-1">
-                      <label className="labels">Address</label>
+                      <label className="labels">
+                        Address
+                      </label>
                       <input
                         className="form-control"
                         required
                         id="outlined-required"
                         label="Address"
                         value={address}
-                        onChange={(e) => setAddress(e.target.value)}
+                        onChange={(e) =>
+                          setAddress(e.target.value)
+                        }
                       />
                     </div>
                     <div className="col-md-6">
-                      <label className="labels">Contact Number</label>
+                      <label className="labels">
+                        Contact Number
+                      </label>
                       <input
                         className="form-control"
                         required
                         id="outlined-required"
                         label="Contact Number"
                         value={contactNumber}
-                        onChange={(e) => setContactNumber(e.target.value)}
+                        onChange={(e) =>
+                          setContactNumber(e.target.value)
+                        }
                       />
                     </div>
                     <div className="col-md-6">
-                      <label className="labels">Emergency Contact Number</label>
+                      <label className="labels">
+                        Emergency Contact Number
+                      </label>
                       <input
                         className="form-control"
                         required
                         id="outlined-required"
                         label="Emergency Contact Number"
                         value={emergencyContactNumber}
-                        onChange={(e) => setEmergencyContact(e.target.value)}
+                        onChange={(e) =>
+                          setEmergencyContact(
+                            e.target.value
+                          )
+                        }
                       />
                     </div>
                   </div>
@@ -305,7 +383,9 @@ const PersonalPatient = () => {
               <div class="col-md-4">
                 <div class="p-3 py-5">
                   <div class="col-md-12">
-                    <label class="labels">Optional Details</label>
+                    <label class="labels">
+                      Optional Details
+                    </label>
                     <input
                       className="form-control"
                       id="outlined-multiline-static"
@@ -313,27 +393,29 @@ const PersonalPatient = () => {
                       multiline
                       rows={4}
                       value={optionalDetails}
-                      onChange={(e) => setOptionalDetails(e.target.value)}
+                      onChange={(e) =>
+                        setOptionalDetails(e.target.value)
+                      }
                     />
                   </div>
                   <div className="row mt-5 d-flex justify-content-between align-items-center">
                     <Button
                       onClick={modifyPatient}
                       variant="contained"
-                      className="col-md-3"
-                    >
+                      className="col-md-3">
                       Save changes
                     </Button>
                     <Button
                       onClick={deletePatient}
                       variant="contained"
-                      className="col-md-4"
-                    >
+                      className="col-md-4">
                       Delete
                     </Button>
                     <div className="col-md-4">
                       <Link to="/personalAdmin">
-                        <Button variant="contained">Go Back</Button>
+                        <Button variant="contained">
+                          Go Back
+                        </Button>
                       </Link>
                     </div>
                   </div>

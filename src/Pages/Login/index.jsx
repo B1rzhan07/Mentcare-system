@@ -8,19 +8,17 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-
 import {
   setUser,
   setIsAuth,
   setTypeof,
 } from "../../Redux/Slices/userSlice";
 
-const Login = ({ text }) => {
+const Login = ({ text, setActive }) => {
   const [type, setType] = React.useState("");
   const users = ["admin", "patient", "doctor"];
   const dispatch = useDispatch();
   const [error, setError] = React.useState(false);
-
   const email = useInput("", {
     isEmpty: true,
     minLength: 3,
@@ -38,14 +36,13 @@ const Login = ({ text }) => {
         password.value,
         type
       );
-
       dispatch(
         setUser({
           email: email.value,
           password: password.value,
         })
       );
-
+      setActive(false);
       dispatch(setIsAuth(true));
       dispatch(setTypeof(type));
       localStorage.setItem("token", response.token);
