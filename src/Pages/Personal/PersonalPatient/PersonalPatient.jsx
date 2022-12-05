@@ -10,6 +10,9 @@ import { bloodGroups } from "../../../assets/Personal/personal";
 import { maritalStatuses } from "../../../assets/Personal/personal";
 import Form from "react-bootstrap/Form";
 import Header from "../../../Components/Header/Header";
+import Card from "react-bootstrap/Card";
+import CancelIcon from "@mui/icons-material/Cancel";
+import DoneIcon from "@mui/icons-material/Done";
 
 const PersonalPatient = () => {
   const type = localStorage.getItem("type");
@@ -101,6 +104,7 @@ const PersonalPatient = () => {
       console.log(e);
     }
   };
+
   const deletePatient = async () => {
     try {
       const response = await axios.delete(
@@ -120,7 +124,74 @@ const PersonalPatient = () => {
       console.log(e);
     }
   };
+  const [treatments, setTreatments] = React.useState([]);
+  React.useEffect(() => {
+    try {
+      axios
+        .get(
+          `http://localhost:8800/api/myPage/patient/treatment`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem(
+                "token"
+              )}`,
+            },
+          }
+        )
+        .then((response) => {
+          console.log(response);
+          setTreatments(response.data);
+        });
+    } catch (e) {
+      console.log(e);
+    }
+  }, []);
+  function padTo2Digits(num) {
+    return String(num).padStart(2, "0");
+  }
 
+  const x = treatments.length;
+  const [clicked, setClicked] = React.useState(false);
+  const resolve = async (id) => {
+    try {
+      await axios({
+        method: "patch",
+        url: `http://localhost:8800/api/myPage/patient/treatment/${id}/statusChange`,
+
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem(
+            "token"
+          )}`,
+        },
+      });
+      setTreatments(
+        treatments.filter((treatment) => treatment.id != id)
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const [History, setHistory] = React.useState([]);
+  React.useEffect(() => {
+    try {
+      const res = axios
+        .get(
+          "http://localhost:8800/api/myPage/patient/treatment/history",
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem(
+                "token"
+              )}`,
+            },
+          }
+        )
+        .then((res) => {
+          setHistory(res.data);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
   return (
     <div className="bg-light vh-100">
       <Header />
@@ -425,230 +496,80 @@ const PersonalPatient = () => {
           )}
         </div>
       </div>
+      <h3 className={classes.treat}>My Treatments</h3>
+      <div className={classes.card}>
+        {treatments.map((treat, index) => (
+          <Card
+            key={index}
+            style={{ width: "18rem" }}
+            className={classes.treat}>
+            <Card.Body>
+              <Card.Title>Treatment {index + 1}</Card.Title>
+              <Card.Subtitle className="mb-2 text-muted">
+                Doctor : {treat.doctor.name}{" "}
+                {treat.doctor.surname}
+              </Card.Subtitle>
+              <Card.Text>{treat.text}</Card.Text>
+              <Card.Text>
+                Date:{" "}
+                {new Date(treat.createdAt).getUTCDate()}
+                {"/"}
+                {new Date(treat.createdAt).getUTCMonth()}
+                {"/"}
+                {new Date(treat.createdAt).getUTCFullYear()}
+              </Card.Text>
+              <Card.Text className={classes.icon}>
+                Time:
+                {new Date(treat.createdAt).getUTCHours()}
+                {":"}
+                {padTo2Digits(
+                  new Date(treat.createdAt).getMinutes()
+                )}{" "}
+                <CancelIcon
+                  onClick={() => resolve(treat.id)}
+                />
+              </Card.Text>
+            </Card.Body>
+          </Card>
+        ))}
+      </div>
+      <h3 className={classes.treat}>
+        My History of Treatments
+      </h3>
+      <div className={classes.card}>
+        {History.map((treat, index) => (
+          <Card
+            key={index}
+            style={{ width: "18rem" }}
+            className={classes.treat}>
+            <Card.Body>
+              <Card.Title>Treatment {index + 1}</Card.Title>
+              <Card.Subtitle className="mb-2 text-muted">
+                Doctor : {treat.doctor.name}{" "}
+                {treat.doctor.surname}
+              </Card.Subtitle>
+              <Card.Text>{treat.text}</Card.Text>
+              <Card.Text>
+                Date:{" "}
+                {new Date(treat.createdAt).getUTCDate()}
+                {"/"}
+                {new Date(treat.createdAt).getUTCMonth()}
+                {"/"}
+                {new Date(treat.createdAt).getUTCFullYear()}
+              </Card.Text>
+              <Card.Text className={classes.icon}>
+                Time:
+                {new Date(treat.createdAt).getUTCHours()}
+                {":"}
+                {padTo2Digits(
+                  new Date(treat.createdAt).getMinutes()
+                )}{" "}
+              </Card.Text>
+            </Card.Body>
+          </Card>
+        ))}
+      </div>
     </div>
-    // <>
-    //   <Header />
-
-    //   <div className={classes.wrapper}>
-    //     <h1>
-    //       Personal Information of {patient[0].name}
-    //       {patient[0].surname}
-    //     </h1>
-    //     <div>
-    //       <div>
-    //         Name: {patient[0].name}
-    //         {typeUser === "admin" && (
-    //           <input
-    //             id="outlined-required"
-    //             label="First Name"
-    //             value={name}
-    //             onChange={(e) => setName(e.target.value)}
-    //           />
-    //         )}
-    //       </div>
-
-    //       <div>
-    //         Surname: {patient[0].surname || "No data"}
-    //         {typeUser === "admin" && (
-    //           <input
-    //             required
-    //             id="outlined-required"
-    //             label="Surname"
-    //             value={surname}
-    //             onChange={(e) => setSurname(e.target.value)}
-    //           />
-    //         )}
-    //         <div>
-    //           Middle Name: {patient[0].middle_name}
-    //           {typeUser === "admin" && (
-    //             <input
-    //               required
-    //               id="outlined-required"
-    //               label="Middle Name"
-    //               value={middleName}
-    //               onChange={(e) =>
-    //                 setMiddleName(e.target.value)
-    //               }
-    //             />
-    //           )}
-    //         </div>
-    //       </div>
-    //       <div className={classes.blood}>
-    //         Blood Group: {patient[0].blood_group}
-    //         {typeUser === "admin" && (
-    //           <TextField
-    //             id="outlined-select-currency"
-    //             required
-    //             select
-    //             label="Blood Group"
-    //             size="small"
-    //             value={bloodGroup}
-    //             onChange={handleChange1}
-    //             helperText="Please select your Blood Group">
-    //             {bloodGroups.map((option) => (
-    //               <MenuItem
-    //                 key={option.value}
-    //                 value={option.value}>
-    //                 {option.label}
-    //               </MenuItem>
-    //             ))}
-    //           </TextField>
-    //         )}
-    //       </div>
-    //       <div>
-    //         iin: {patient[0].iin}
-    //         {typeUser === "admin" && (
-    //           <input
-    //             required
-    //             id="outlined-required"
-    //             label="IIN Number"
-    //             value={iin}
-    //             onChange={(e) => setIin(e.target.value)}
-    //           />
-    //         )}
-    //       </div>
-    //       <div>
-    //         date of birth: {patient[0].date_of_birth}
-    //         {typeUser === "admin" && (
-    //           <input
-    //             required
-    //             type="date"
-    //             id="outlined-required"
-    //             value={dateOfBirth}
-    //             onChange={(e) =>
-    //               setDateOfBirth(e.target.value)
-    //             }
-    //           />
-    //         )}
-    //       </div>
-    //       <div>
-    //         government id: {patient[0].government_id}
-    //         {typeUser === "admin" && (
-    //           <input
-    //             required
-    //             id="outlined-required"
-    //             label="ID Number"
-    //             value={governmentId}
-    //             onChange={(e) =>
-    //               setGovernmentId(e.target.value)
-    //             }
-    //           />
-    //         )}
-    //       </div>
-
-    //       <div>
-    //         Marital Status: {patient[0].marital_status}
-    //         {typeUser === "admin" && (
-    //           <TextField
-    //             id="outlined-select-currency"
-    //             required
-    //             select
-    //             label="Marital Status"
-    //             value={maritalStatus}
-    //             onChange={handleChange2}
-    //             helperText="Please select your Marital Status">
-    //             {maritalStatuses.map((option) => (
-    //               <MenuItem
-    //                 key={option.value}
-    //                 value={option.value}>
-    //                 {option.label}
-    //               </MenuItem>
-    //             ))}
-    //           </TextField>
-    //         )}
-    //       </div>
-    //       <div>
-    //         emergency contact number:{" "}
-    //         {patient[0].emergency_contact_number}
-    //         {typeUser === "admin" && (
-    //           <input
-    //             required
-    //             id="outlined-required"
-    //             label="Emergency Contact Number"
-    //             value={emergencyContactNumber}
-    //             onChange={(e) =>
-    //               setEmergencyContact(e.target.value)
-    //             }
-    //           />
-    //         )}
-    //       </div>
-    //       <div>
-    //         contact number: {patient[0].contact_number}
-    //         {typeUser === "admin" && (
-    //           <input
-    //             required
-    //             id="outlined-required"
-    //             label="Contact Number"
-    //             value={contactNumber}
-    //             onChange={(e) =>
-    //               setContactNumber(e.target.value)
-    //             }
-    //           />
-    //         )}
-    //       </div>
-    //       <div>
-    //         email: {patient[0].email}
-    //         {typeUser === "admin" && (
-    //           <input
-    //             id="outlined"
-    //             label="E-mail"
-    //             value={email}
-    //             onChange={(e) => setEmail(e.target.value)}
-    //           />
-    //         )}
-    //       </div>
-    //       <div>
-    //         address: {patient[0].address}
-    //         {typeUser === "admin" && (
-    //           <input
-    //             required
-    //             id="outlined-required"
-    //             label="Address"
-    //             value={address}
-    //             onChange={(e) => setAddress(e.target.value)}
-    //           />
-    //         )}
-    //       </div>
-    //       <div>
-    //         optional details: {patient[0].optional_details}
-    //         {typeUser === "admin" && (
-    //           <input
-    //             id="outlined-multiline-static"
-    //             label="Optional Details"
-    //             multiline
-    //             rows={4}
-    //             value={optionalDetails}
-    //             onChange={(e) =>
-    //               setOptionalDetails(e.target.value)
-    //             }
-    //           />
-    //         )}
-    //       </div>
-    //     </div>
-    //     {typeUser === "admin" && (
-    //       <div>
-    //         <Button
-    //           variant="contained"
-    //           onClick={modifyPatient}>
-    //           Save Changes
-    //         </Button>
-    //         <Button
-    //           variant="contained"
-    //           onClick={deletePatient}>
-    //           Delete
-    //         </Button>
-    //         <Link to="/personalAdmin">
-    //           <Button variant="contained">Go Back</Button>
-    //         </Link>
-    //       </div>
-    //     )}
-    //     {typeUser === "patient" && (
-    //       <Link to="/">
-    //         <Button variant="contained">Go Back</Button>
-    //       </Link>
-    //     )}
-    //   </div>
-    // </>
   );
 };
 

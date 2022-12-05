@@ -10,13 +10,37 @@ import { categories } from "../../../assets/Personal/personal";
 import classes from "./PersonalDoctor.module.scss";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Form from "react-bootstrap/Form";
-import { datePickerValueManager } from "@mui/x-date-pickers/DatePicker/shared";
 import Header from "../../../Components/Header/Header";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
+import Footer from "../../../Components/Footer/Footer";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Modal from "@mui/material/Modal";
+import TextareaAutosize from "@mui/material/TextareaAutosize";
+
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
 const PersonalDoctor = () => {
   const { id } = useParams();
   const { doctors } = useSelector((state) => state.user);
   const typeUser = localStorage.getItem("type");
   var doctor = [];
+  const { patients } = useSelector((state) => state.user);
 
   if (typeUser == "doctor") {
     doctor = doctors;
@@ -136,8 +160,34 @@ const PersonalDoctor = () => {
       console.log(error);
     }
   };
-  console.log(doctor[0].photo);
-
+  const { appointments } = useSelector(
+    (state) => state.appointment
+  );
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const [treatment, setTreatment] = React.useState("");
+  const sendTreatment = async (id) => {
+    try {
+      const response = axios.post(
+        `http://localhost:8800/api/myPage/doctor/treatment/${id}`,
+        {
+          text: treatment,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem(
+              "token"
+            )}`,
+          },
+        }
+      );
+      setTreatment("");
+      handleClose();
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div className="bg-light vh-100">
       <Header />
@@ -489,6 +539,81 @@ const PersonalDoctor = () => {
           )}
         </div>
       </div>
+      <h3 className={classes.pat}>My patients</h3>
+      <TableContainer
+        component={Paper}
+        className={classes.table}>
+        <Table
+          sx={{ maxWidth: 900 }}
+          aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Name</TableCell>
+              <TableCell align="right">Surname</TableCell>
+              <TableCell align="right">Treatment</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {appointments.map((patient, index) => (
+              <TableRow
+                key={index}
+                sx={{
+                  "&:last-child td, &:last-child th": {
+                    border: 0,
+                  },
+                }}>
+                <TableCell component="th" scope="row">
+                  {patient.name}
+                </TableCell>
+                <TableCell align="right">
+                  {patient.surname}
+                </TableCell>
+                <TableCell align="right">
+                  <Button onClick={handleOpen}>
+                    Send treatment
+                  </Button>
+                  <Modal
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description">
+                    <Box sx={style}>
+                      <Typography
+                        id="modal-modal-title"
+                        variant="h6"
+                        component="h2">
+                        <h3>Treatment:</h3>
+                        <TextareaAutosize
+                          maxRows={4}
+                          aria-label="maximum height"
+                          onChange={(e) =>
+                            setTreatment(e.target.value)
+                          }
+                          style={{ width: 350 }}
+                        />
+                      </Typography>
+                      <Typography
+                        id="modal-modal-description"
+                        sx={{ mt: 2 }}>
+                        <Button
+                          variant="outlined"
+                          onClick={() =>
+                            sendTreatment(
+                              patient.patient.id
+                            )
+                          }>
+                          Send
+                        </Button>
+                      </Typography>
+                    </Box>
+                  </Modal>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <Footer />
     </div>
   );
 };
