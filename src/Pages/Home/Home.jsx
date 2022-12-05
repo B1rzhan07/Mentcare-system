@@ -9,6 +9,7 @@ import SearchDoctor from "../../Components/SearchDoctor/SearchDoctor";
 import Box from "@mui/material/Box";
 import Pagination from "@mui/material/Pagination";
 import Header from "../../Components/Header/Header";
+import { useState } from "react";
 const pageSize = 6;
 const Home = () => {
   const { departments } = useSelector(
@@ -30,6 +31,22 @@ const Home = () => {
     "../../img/13.png",
     "../../img/14.png",
   ];
+  const [curPage, setCurPage] = useState(1);
+  const [postPerPage] = useState(5);
+  const indexOfLastPost = curPage * postPerPage;
+  const indexOfFirstPost = indexOfLastPost - postPerPage;
+  const currentPosts = departments.slice(
+    indexOfFirstPost,
+    indexOfLastPost
+  );
+  const paginationCount = Math.ceil(
+    departments.length / postPerPage
+  );
+
+  function handlePage(pageNum) {
+    setCurPage(pageNum);
+  }
+
   return (
     <>
       <Header />
@@ -39,7 +56,7 @@ const Home = () => {
       </div>
       <hr />
       <div className={classes.card}>
-        {departments.map((department) => (
+        {currentPosts.map((department) => (
           <Card
             key={department.id}
             departmentName={department.department_name}
@@ -54,7 +71,12 @@ const Home = () => {
         alignContent={"center"}
         display={"flex"}
         sx={{ margin: "20px 0px" }}>
-        <Pagination count={2} color="primary" />
+        <Pagination
+          count={paginationCount}
+          color="primary"
+          onChange={(e) =>
+            handlePage(e.target.textContent)
+          }></Pagination>
       </Box>
       <Footer />
     </>

@@ -5,7 +5,8 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import { useSelector } from "react-redux";
 import Header from "../../Components/Header/Header";
-
+import DoneIcon from "@mui/icons-material/Done";
+import axios from "../../api/axios";
 const bull = (
   <Box
     component="span"
@@ -37,7 +38,22 @@ const HistoryDoctor = () => {
   for (let i = 0; i < appointments.length; i++) {
     len.push(i + 1);
   }
+  const modifyApp = async (id) => {
+    try {
+      await axios({
+        method: "patch",
+        url: `myPage/doctor/appointment/${id}/statusChange`,
 
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem(
+            "token"
+          )}`,
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div>
       <Header />
@@ -52,14 +68,14 @@ const HistoryDoctor = () => {
                   gutterBottom>
                   Appointment {len[index]}
                 </Typography>
-                <Typography variant="h5" component="div">
+                {/* <Typography variant="h5" component="div">
                   Service name: {inter[index].service_name}
-                </Typography>
-                <Typography
+                </Typography> */}
+                {/* <Typography
                   sx={{ mb: 1.5 }}
                   color="text.secondary">
                   Service price: ${inter[index].price}
-                </Typography>
+                </Typography> */}
                 <Typography variant="body2">
                   Patient: {""}
                   <b>
@@ -110,6 +126,17 @@ const HistoryDoctor = () => {
                           appointment.endDate
                         ).getUTCMinutes()}
                   </b>
+                </Typography>
+                <Typography variant="body2">
+                  Completed status:{" "}
+                  <b>
+                    {appointment.completed ? "Yes" : "No"}
+                  </b>
+                  <DoneIcon
+                    onClick={() =>
+                      modifyApp(appointment.id)
+                    }
+                  />
                 </Typography>
               </CardContent>
             </React.Fragment>

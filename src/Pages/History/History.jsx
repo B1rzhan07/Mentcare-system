@@ -13,6 +13,7 @@ import SendSharpIcon from "@mui/icons-material/SendSharp";
 import { useNavigate } from "react-router-dom";
 import axios from "../../api/axios";
 import Header from "../../Components/Header/Header";
+import DoneIcon from "@mui/icons-material/Done";
 const bull = (
   <Box
     component="span"
@@ -58,7 +59,7 @@ const History = () => {
   React.useEffect(() => {
     try {
       const res = axios
-        .get("/myPage/patient/treatment/history", {
+        .get("/myPage/patient/appointment/history", {
           headers: {
             Authorization: `Bearer ${localStorage.getItem(
               "token"
@@ -72,6 +73,7 @@ const History = () => {
       console.log(error);
     }
   }, []);
+
   return (
     <div>
       <Header />
