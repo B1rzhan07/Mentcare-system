@@ -4,7 +4,7 @@ import AlertTitle from "@mui/material/AlertTitle";
 const AlertFailure = ({ value }) => {
   return (
     <div>
-      <Alert severity="error">
+      <Alert severity="error" sx={{ mt: 10 }}>
         <AlertTitle>Error</AlertTitle>
         {value
           ? value

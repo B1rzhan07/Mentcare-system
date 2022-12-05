@@ -99,7 +99,7 @@ const History = () => {
                     /
                     {new Date(
                       appointment.startDate
-                    ).getUTCDate() + 1}
+                    ).getUTCDate()}
                     /
                     {new Date(
                       appointment.startDate

@@ -10,19 +10,12 @@ import { useDispatch } from "react-redux";
 import { addServiceDoctor } from "../../Redux/Slices/serviceSlice";
 import { setSelectedTime } from "../../Redux/Slices/appointmentSlice";
 import { setIdDoctor } from "../../Redux/Slices/appointmentSlice";
+
 const ServiceSelect = ({ clear }) => {
   const dispatch = useDispatch();
   const { id } = useParams();
   const [timeService, setTimeService] = React.useState("");
   const { time } = useSelector((state) => state.service);
-  console.log("time", time);
-  let startHours = [];
-  let startMinutes = [];
-  for (let i = 0; i < time.length; i++) {
-    let sh = new Date(time[i]);
-    startHours.push(sh.getUTCHours());
-    startMinutes.push(sh.getUTCMinutes());
-  }
 
   const handleChange = (event) => {
     setTimeService(event.target.value);

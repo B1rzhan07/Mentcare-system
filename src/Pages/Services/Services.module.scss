@@ -4,19 +4,32 @@
     display: flex;
     margin-bottom: 20px;
     margin-right: 60px;
+    justify-content: center;
 }
 
 .top {
     padding: 20px;
+    display: flex;
+    justify-content: center;
 }
 
 .img {
+    display: flex;
+    justify-content: center;
+    width: 300px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 20px;
+    align-items: center;
     border: 1px solid rgb(0, 0, 0);
     margin-bottom: 20px;
-    border-radius: 80%;
+    border-radius: 50%;
+    width: 200px;
 }
 
 .date {
+    margin-top: 50px;
     display: flex;
     justify-content: space-around;
     margin-bottom: 20px;
@@ -41,5 +54,7 @@
 }
 
 .each {
-    margin-left: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
