@@ -36,6 +36,8 @@ const style = {
   p: 4,
 };
 const PersonalDoctor = () => {
+  const [idtr, setIdtr] = React.useState("");
+  console.log("idtr", idtr);
   const { id } = useParams();
   const { doctors } = useSelector((state) => state.user);
   const typeUser = localStorage.getItem("type");
@@ -164,13 +166,18 @@ const PersonalDoctor = () => {
     (state) => state.appointment
   );
   const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
+  const handleOpen = (id) => {
+    setOpen(true);
+    setIdtr(id);
+  };
   const handleClose = () => setOpen(false);
   const [treatment, setTreatment] = React.useState("");
-  const sendTreatment = async (id) => {
+
+  const sendTreatment = async () => {
+    console.log("idfrom", id);
     try {
       const response = axios.post(
-        `http://localhost:8800/api/myPage/doctor/treatment/${id}`,
+        `http://localhost:8800/api/myPage/doctor/treatment/${idtr}`,
         {
           text: treatment,
         },
@@ -569,7 +576,10 @@ const PersonalDoctor = () => {
                   {patient.surname}
                 </TableCell>
                 <TableCell align="right">
-                  <Button onClick={handleOpen}>
+                  <Button
+                    onClick={() =>
+                      handleOpen(patient.patient.id)
+                    }>
                     Send treatment
                   </Button>
                   <Modal
@@ -597,11 +607,7 @@ const PersonalDoctor = () => {
                         sx={{ mt: 2 }}>
                         <Button
                           variant="outlined"
-                          onClick={() =>
-                            sendTreatment(
-                              patient.patient.id
-                            )
-                          }>
+                          onClick={sendTreatment}>
                           Send
                         </Button>
                       </Typography>

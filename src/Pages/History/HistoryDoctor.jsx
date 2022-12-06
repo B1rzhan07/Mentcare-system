@@ -50,6 +50,9 @@ const HistoryDoctor = () => {
           )}`,
         },
       });
+      appointments.filter(
+        (appointment) => appointment.id !== id
+      );
     } catch (error) {
       console.log(error);
     }

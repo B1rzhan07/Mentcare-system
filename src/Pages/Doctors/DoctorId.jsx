@@ -4,6 +4,7 @@ import axios from "../../api/axios";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Header from "../../Components/Header/Header";
+import { Link } from "react-router-dom";
 import {
   MDBCol,
   MDBContainer,
@@ -119,7 +120,11 @@ const DoctorId = () => {
                           <MDBCol size="6" className="mb-3">
                             <MDBCardText className="text-muted border border-secondary rounded p-2">
                               Service Name:{" "}
-                              {service.service_name}{" "}
+                              <Link
+                                className={classes.link}
+                                to={`/services/${service.id}`}>
+                                {service.service_name}{" "}
+                              </Link>
                               <br></br> Price: $
                               {service.price} <br></br>
                               Duration: {

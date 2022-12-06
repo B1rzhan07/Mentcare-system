@@ -28,3 +28,10 @@
 .img {
     border: solid 1x black;
 }
+
+.link {
+    text-decoration: none;
+    &:hover {
+        color: #1e90ff;
+    }
+}

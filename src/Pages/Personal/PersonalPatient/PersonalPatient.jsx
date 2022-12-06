@@ -8,11 +8,9 @@ import { Link } from "react-router-dom";
 import classes from "./PersonalPatient.module.scss";
 import { bloodGroups } from "../../../assets/Personal/personal";
 import { maritalStatuses } from "../../../assets/Personal/personal";
-import Form from "react-bootstrap/Form";
 import Header from "../../../Components/Header/Header";
 import Card from "react-bootstrap/Card";
 import CancelIcon from "@mui/icons-material/Cancel";
-import DoneIcon from "@mui/icons-material/Done";
 
 const PersonalPatient = () => {
   const type = localStorage.getItem("type");
@@ -124,7 +122,9 @@ const PersonalPatient = () => {
       console.log(e);
     }
   };
+
   const [treatments, setTreatments] = React.useState([]);
+  const [History, setHistory] = React.useState([]);
   React.useEffect(() => {
     try {
       axios
@@ -167,11 +167,12 @@ const PersonalPatient = () => {
       setTreatments(
         treatments.filter((treatment) => treatment.id != id)
       );
+      setHistory([...History, treatments[x - 1]]);
     } catch (error) {
       console.log(error);
     }
   };
-  const [History, setHistory] = React.useState([]);
+
   React.useEffect(() => {
     try {
       const res = axios
@@ -520,7 +521,8 @@ const PersonalPatient = () => {
               </Card.Text>
               <Card.Text className={classes.icon}>
                 Time:
-                {new Date(treat.createdAt).getUTCHours()}
+                {new Date(treat.createdAt).getUTCHours() +
+                  6}
                 {":"}
                 {padTo2Digits(
                   new Date(treat.createdAt).getMinutes()
@@ -559,7 +561,8 @@ const PersonalPatient = () => {
               </Card.Text>
               <Card.Text className={classes.icon}>
                 Time:
-                {new Date(treat.createdAt).getUTCHours()}
+                {new Date(treat.createdAt).getUTCHours() +
+                  6}
                 {":"}
                 {padTo2Digits(
                   new Date(treat.createdAt).getMinutes()

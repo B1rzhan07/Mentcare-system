@@ -16,12 +16,11 @@ const ServiceDoctor = ({ clear }) => {
   const handleChange = (event) => {
     setDoctor(event.target.value);
   };
+  console.log("fwefw", doctor);
 
   dispatch(setSelectedDoctor(doctor));
   const x = serviceDoctor.length;
-  if (clear) {
-    setDoctor("");
-  }
+
   return (
     <div>
       <FormControl
@@ -37,7 +36,7 @@ const ServiceDoctor = ({ clear }) => {
           label="Time"
           onChange={handleChange}>
           {serviceDoctor[x - 1]?.map((doctor, i) => (
-            <MenuItem key={i} value={doctor.fullName}>
+            <MenuItem key={i} value={doctor.id}>
               {doctor.fullName}
             </MenuItem>
           ))}

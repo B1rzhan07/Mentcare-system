@@ -76,6 +76,11 @@ const Department = () => {
     );
     if (res) {
       alert("Service added successfully");
+      setName("");
+      setPrice("");
+      setDoctorId("");
+      setDoctorPrice("");
+      setDuration("");
     }
   };
   console.log(services);
@@ -91,6 +96,7 @@ const Department = () => {
           },
         }
       );
+      service.filter((service) => service.id != id);
     } catch (err) {
       console.log(err);
     }

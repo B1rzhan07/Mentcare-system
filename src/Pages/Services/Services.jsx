@@ -106,7 +106,7 @@ const Services = () => {
             name: patients[0].name,
             surname: patients[0].surname,
             startDate: selectedTime,
-            doctorId: idDoctor,
+            doctorId: selectedDoctor,
           },
           {
             headers: {

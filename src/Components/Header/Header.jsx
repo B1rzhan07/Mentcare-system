@@ -145,6 +145,7 @@ const Header = () => {
 
   const logout = () => {
     navigate("/");
+    window.location.reload();
     localStorage.clear();
   };
   const logged = localStorage.getItem("token");
